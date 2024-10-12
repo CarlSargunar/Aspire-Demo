@@ -7,7 +7,7 @@ You need the following installed to run the demo:
 - .NET 8.0
     - .NET Aspire workload: (Installed with the Visual Studio installer or the .NET CLI)
 - An OCI compliant container runtime, such as:
-    - Docker Desktop
+    - Docker Desktop 
     - Podman.
 - An IDE or text editor, such as:
     - Visual Studio
