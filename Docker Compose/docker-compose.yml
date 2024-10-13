@@ -2,13 +2,13 @@ version: '3.8'
 
 services:
   umbraco-site:
-    image: umbraco/umbraco:latest
+    image: umb-website
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
     ports:
       - "8080:80"
     depends_on:
-      - sql-edge
+      - sql-db
       - redis-cache
       - rabbitmq
       - mongodb
@@ -16,18 +16,20 @@ services:
     networks:
       - app-network
 
-  sql-edge:
-    image: mcr.microsoft.com/azure-sql-edge:latest
-    environment:
-      SA_PASSWORD: "YourStrong@Passw0rd"
-      ACCEPT_EULA: "Y"
+  sql-db:
+    container_name: sql-db
+    build:
+      context: ./SQLDb
     ports:
-      - "1433:1433"
+     - "1433:1433"
+    volumes:
+     - umb_database:/var/opt/mssql
     networks:
       - app-network
 
   redis-cache:
-    image: redis:latest
+    image: redis:7.4.1
+    restart: unless-stopped
     ports:
       - "6379:6379"
     networks:
@@ -35,6 +37,7 @@ services:
 
   mongodb:
     image: mongo:latest
+    restart: unless-stopped
     ports:
       - "27017:27017"
     networks:
@@ -42,6 +45,7 @@ services:
 
   rabbitmq:
     image: rabbitmq:3-management
+    restart: unless-stopped
     ports:
       - "5672:5672"
       - "15672:15672"

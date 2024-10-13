@@ -1,5 +1,9 @@
 # Aspire-Demo
 
+This is the companion repo for my talk about .NET Aspire, which illustrates a mechanism to take a cloud-native application build with Docker Compose and move it to .NET Aspire. 
+
+There are two applications in this repo - one build with Docker Compose, and one with Aspire. 
+
 Slides for this talk are available [here](https://docs.google.com/presentation/d/1pKHi34APKTjNJMnEQa6QBoe_FazFd_tjzxuLe4BMN38/)
 
 ## Prerequisites
@@ -8,9 +12,7 @@ You need the following installed to run the demo:
 
 - .NET 8.0
     - .NET Aspire workload: (Installed with the Visual Studio installer or the .NET CLI)
-- An OCI compliant container runtime, such as:
-    - Docker Desktop 
-    - Podman
+- Docker Desktop or a local Docker installation
 - An IDE or text editor, such as:
     - Visual Studio
     - Visual Studio Code
