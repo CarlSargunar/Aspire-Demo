@@ -10,8 +10,12 @@
 <section class="section">
 
     <div class="container">
-        @await Component.InvokeAsync("LatestBlogPosts",
-            new { numberOfPosts = Model.HowManyPostsShouldBeShown, startNodeKey = Model.Key })
+        @await Umbraco.RenderMacroAsync("latestBlogposts",
+            new
+            {
+                numberOfPosts = Model.HowManyPostsShouldBeShown,
+                startNodeId = Model.Id
+            })
     </div>
 
 </section>
