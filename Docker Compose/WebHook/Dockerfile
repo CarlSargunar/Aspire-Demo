@@ -6,24 +6,20 @@ WORKDIR /app
 EXPOSE 8080
 EXPOSE 8081
 
-
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["UmbWebsite.csproj", "UmbWebsite/"]
-RUN dotnet restore "./UmbWebsite/UmbWebsite.csproj"
+COPY ["WebHook/WebHook.csproj", "WebHook/"]
+RUN dotnet restore "./WebHook/WebHook.csproj"
 COPY . .
-WORKDIR "/src/UmbWebsite"
-RUN dotnet build "./UmbWebsite.csproj" -c $BUILD_CONFIGURATION -o /app/build
+WORKDIR "/src/WebHook"
+RUN dotnet build "./WebHook.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./UmbWebsite.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
-
-# Set an env variable to mark this as a Release configuration
-ENV ASPNETCORE_ENVIRONMENT=Release
+RUN dotnet publish "./WebHook.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "UmbWebsite.dll"]
+ENTRYPOINT ["dotnet", "WebHook.dll"]
