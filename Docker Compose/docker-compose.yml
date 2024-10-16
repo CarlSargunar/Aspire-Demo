@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  umbwebsite:
+    image: ${DOCKER_REGISTRY-}umbwebsite
+    build:
+      context: .
+      dockerfile: UmbWebsite/Dockerfile
