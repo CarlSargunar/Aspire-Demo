@@ -1,70 +1,8 @@
-version: '3.8'
+version: '3.4'
 
 services:
-  umbraco-site:
-    image: umb-website
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Production
-    ports:
-      - "8080:80"
-    depends_on:
-      - sql-db
-      - redis-cache
-      - rabbitmq
-      - mongodb
-      - aspnet-api
-    networks:
-      - app-network
-
-  sql-db:
-    container_name: sql-db
+  umbwebsite:
+    image: ${DOCKER_REGISTRY-}umbwebsite
     build:
-      context: ./SQLDb
-    ports:
-     - "1433:1433"
-    volumes:
-     - umb_database:/var/opt/mssql
-    networks:
-      - app-network
-
-  redis-cache:
-    image: redis:7.4.1
-    restart: unless-stopped
-    ports:
-      - "6379:6379"
-    networks:
-      - app-network
-
-  mongodb:
-    image: mongo:latest
-    restart: unless-stopped
-    ports:
-      - "27017:27017"
-    networks:
-      - app-network
-
-  rabbitmq:
-    image: rabbitmq:3-management
-    restart: unless-stopped
-    ports:
-      - "5672:5672"
-      - "15672:15672"
-    networks:
-      - app-network
-
-  aspnet-api:
-    image: mcr.microsoft.com/dotnet/aspnet:7.0 # LTS version for ASP.NET
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Production
-    ports:
-      - "5000:80"
-    depends_on:
-      - sql-edge
-      - rabbitmq
-      - mongodb
-    networks:
-      - app-network
-
-networks:
-  app-network:
-    driver: bridge
+      context: .
+      dockerfile: UmbWebsite/Dockerfile
