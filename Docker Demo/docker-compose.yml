@@ -2,8 +2,8 @@ services:
   umbwebsite:
     image: ${DOCKER_REGISTRY-}umb-website
     build:
-      context: .
-      dockerfile: UmbWebsite/Dockerfile
+      context: ./UmbWebsite
+      dockerfile: Dockerfile
     depends_on:
       - sql-db    
     networks:
@@ -13,8 +13,8 @@ services:
   sql-db:
     container_name: ${DOCKER_REGISTRY-}sql-db
     build:
-      context: .
-      dockerfile: SQLDb/Dockerfile
+      context: ./SQLDb
+      dockerfile: Dockerfile
     ports:
      - "1433:1433"
     networks:

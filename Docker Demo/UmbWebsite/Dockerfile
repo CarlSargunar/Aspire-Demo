@@ -12,8 +12,8 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["UmbWebsite.csproj", "UmbWebsite/"]
 RUN dotnet restore "./UmbWebsite/UmbWebsite.csproj"
+WORKDIR /src/UmbWebsite
 COPY . .
-WORKDIR "/src/UmbWebsite"
 RUN dotnet build "./UmbWebsite.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
