@@ -1,8 +1,26 @@
-version: '3.4'
-
 services:
   umbwebsite:
-    image: ${DOCKER_REGISTRY-}umbwebsite
+    image: ${DOCKER_REGISTRY-}umb-website
     build:
       context: .
       dockerfile: UmbWebsite/Dockerfile
+    depends_on:
+      - sql-db    
+    networks:
+      - app-network
+
+
+  sql-db:
+    container_name: ${DOCKER_REGISTRY-}sql-db
+    build:
+      context: .
+      dockerfile: SQLDb/Dockerfile
+    ports:
+     - "1433:1433"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
