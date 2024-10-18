@@ -3,21 +3,25 @@
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 USER app
 WORKDIR /app
-EXPOSE 8080
-EXPOSE 8081
+EXPOSE 8082
+EXPOSE 8083
+
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["DemoApi/DemoApi.csproj", "DemoApi/"]
+COPY ["DemoApi.csproj", "DemoApi/"]
 RUN dotnet restore "./DemoApi/DemoApi.csproj"
+WORKDIR /src/DemoApi
 COPY . .
-WORKDIR "/src/DemoApi"
 RUN dotnet build "./DemoApi.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
 RUN dotnet publish "./DemoApi.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+
+# Set an env variable to mark this as a Release configuration
+ENV ASPNETCORE_ENVIRONMENT=Release
 
 FROM base AS final
 WORKDIR /app

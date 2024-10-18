@@ -11,10 +11,10 @@ services:
       - app-network
 
   api:
-    image: ${DOCKER_REGISTRY-}umb-website
+    image: ${DOCKER_REGISTRY-}api
     restart: unless-stopped
     build:
-      context: ./UmbWebsite
+      context: ./DemoApi
       dockerfile: Dockerfile
     depends_on:
       - sql-db    
