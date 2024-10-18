@@ -8,8 +8,8 @@ services:
       - "8080"
       - "8081"
     volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+      - ${USER_SECRETS_PATH}:/home/app/microsoft/usersecrets:ro
+      - ${HTTPS_CERT_PATH}:/home/app/aspnet/https:ro
 
   api:
     environment:
@@ -20,8 +20,8 @@ services:
       - "8080"
       - "8081"
     volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro      
+      - ${USER_SECRETS_PATH}:/home/app/microsoft/usersecrets:ro
+      - ${HTTPS_CERT_PATH}:/home/app/aspnet/https:ro
 
   sql-db:
     ports:
