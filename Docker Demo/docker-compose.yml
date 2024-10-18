@@ -1,6 +1,18 @@
 services:
   umbwebsite:
     image: ${DOCKER_REGISTRY-}umb-website
+    restart: unless-stopped
+    build:
+      context: ./UmbWebsite
+      dockerfile: Dockerfile
+    depends_on:
+      - sql-db    
+    networks:
+      - app-network
+
+  api:
+    image: ${DOCKER_REGISTRY-}umb-website
+    restart: unless-stopped
     build:
       context: ./UmbWebsite
       dockerfile: Dockerfile
@@ -12,6 +24,7 @@ services:
 
   sql-db:
     container_name: ${DOCKER_REGISTRY-}sql-db
+    restart: unless-stopped
     build:
       context: ./SQLDb
       dockerfile: Dockerfile
@@ -19,6 +32,15 @@ services:
      - "1433:1433"
     networks:
       - app-network
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    restart: unless-stopped
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - app-network    
 
 networks:
   app-network:
