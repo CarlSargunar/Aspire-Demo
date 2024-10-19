@@ -6,6 +6,14 @@
     var message = TempData["Message"]?.ToString();
 }
 <div class="form-group">
+
+@if (!string.IsNullOrEmpty(message))
+{
+    <div class="alert alert-success" role="alert">
+        @message
+    </div>
+}
+
 @using (Html.BeginUmbracoForm<ContactFormController>(nameof(ContactFormController.Submit)))
 {
     <div>
@@ -21,9 +29,5 @@
         @Html.ValidationMessageFor(m => m.Message)
     </div>
     <input type="submit" name="Submit" value="Submit"/>
-   @if (!string.IsNullOrEmpty(message))
-   {
-       @message
-   }
 }
 </div>

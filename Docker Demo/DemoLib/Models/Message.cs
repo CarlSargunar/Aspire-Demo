@@ -1,4 +1,4 @@
-﻿namespace DemoLib
+﻿namespace DemoLib.Models
 {
     public class Message
     {
