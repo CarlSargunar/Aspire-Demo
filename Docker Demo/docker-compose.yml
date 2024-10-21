@@ -20,6 +20,17 @@ services:
       - sql-db    
     networks:
       - app-network
+ 
+  message-processor:
+    image: ${DOCKER_REGISTRY-}message-processor
+    restart: unless-stopped
+    build:
+      context: ./MessageProcessor
+      dockerfile: Dockerfile
+    depends_on:
+      - sql-db    
+    networks:
+      - app-network
 
   sql-db:
     container_name: ${DOCKER_REGISTRY-}sql-db
