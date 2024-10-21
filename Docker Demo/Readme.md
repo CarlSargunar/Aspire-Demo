@@ -20,8 +20,15 @@ The following environment variables are used in the application. You can set up 
 
 ## Notes
 
+### RabbitMQ
 
+The RabbitMQ container is configured to use the default username and password of `guest`.This is not recommended for production use. To start the RabbitMQ container, use the following command:
 
+    docker run -d -p 5672:5672 -p 15672:15672 --name rabbitmq rabbitmq:3-management
+
+To run the management interface, navigate to `http://localhost:15672` in your browser. The default username and password are `guest`.
+
+### SQLDb
 
 To build and run the local SQLDb container, use the following command:
 

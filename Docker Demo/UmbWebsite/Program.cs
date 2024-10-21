@@ -1,3 +1,5 @@
+using UmbWebsite.Configuration;
+
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.CreateUmbracoBuilder()
@@ -5,6 +7,8 @@ builder.CreateUmbracoBuilder()
     .AddWebsite()
     .AddDeliveryApi()
     .AddComposers()
+    // My custom DI service registration
+    .AddCustomServices()
     .Build();
 
 WebApplication app = builder.Build();

@@ -1,6 +1,5 @@
 ﻿using System.Text;
 using System.Text.Json;
-using DemoLib.Models;
 using Microsoft.AspNetCore.Mvc;
 using RabbitMQ.Client;
 using Umbraco.Cms.Core.Cache;
@@ -50,7 +49,8 @@ namespace UmbWebsite.Controllers
                 var message = new Message
                 {
                     Name = model.Name,
-                    MessageText = model.Message
+                    MessageText = model.Message,
+                    MessageType = MessageType.Email
                 };
 
                 // Send message to RabbitMQ

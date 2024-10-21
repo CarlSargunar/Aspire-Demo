@@ -1,4 +1,6 @@
-﻿namespace DemoLib.Models
+﻿using DemoLib.Enumerations;
+
+namespace DemoLib.Models
 {
     public class Message
     {
@@ -6,5 +8,7 @@
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public string Name { get; set; }
         public string MessageText { get; set; }
+
+        public MessageType MessageType { get; set; }
     }
 }
