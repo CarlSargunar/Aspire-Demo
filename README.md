@@ -23,6 +23,13 @@ You need the following installed to run the demo:
 
 
 
+
+## TODO : 
+
+- Environmental variables for USER_SECRETS_PATH and HTTPS_CERT_PATH
+
+
+
 ## References
 
 - https://learn.microsoft.com/en-us/dotnet/aspire/ : Microsoft documentation for .NET Aspire

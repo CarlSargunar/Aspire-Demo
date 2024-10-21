@@ -1,6 +1,6 @@
 # Docker Compose Sample
 
-This sample application consists of several containers to create a website <COMPLETE ME LATER!!!!!>
+This sample application consists of several containers to create a website <TODO: COMPLETE ME LATER!!!!!>
 
 ## Setting Environment Variables
 
@@ -16,6 +16,11 @@ The following environment variables are used in the application. You can set up 
     # macOS/Linux
     USER_SECRETS_PATH=${HOME}/.microsoft/usersecrets
     HTTPS_CERT_PATH=${HOME}/.aspnet/https
+
+Or the alternative is to set a universal dockerfile. Needs to be tested
+
+    USER_SECRETS_PATH=${APPDATA:-${HOME}/.microsoft/usersecrets}
+    HTTPS_CERT_PATH=${APPDATA:-${HOME}/.aspnet/https}
 
 
 ## Notes
@@ -43,7 +48,11 @@ To build and run the local SQLDb container, use the following command:
 The docker compose file is configured to use the following environment variables:
 
 - DOCKER_REGISTRY - The registry to use for the images. If null or not set, the images will be built locally.
+- USER_SECRETS_PATH - The path to the user secrets directory.
+- HTTPS_CERT_PATH - The path to the HTTPS certificate directory.
 
 To build the entire application, use the following command:
 
     docker-compose up --build
+
+

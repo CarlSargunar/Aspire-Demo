@@ -3,6 +3,7 @@
 @using Microsoft.AspNetCore.Mvc.Rendering
 @using Umbraco.Cms.Core.Routing
 @using Umbraco.Cms.Web.Common
+@using UmbWebsites.Models
 @inherits Umbraco.Cms.Web.Common.Macros.PartialViewMacroPage
 @inject UmbracoHelper Umbraco
 @inject IPublishedUrlProvider PublishedUrlProvider
@@ -53,7 +54,7 @@
     {
         <div class="blogposts">
 
-            @foreach (ContentModels.Blogpost post in pagedBlogposts)
+            @foreach (Blogpost post in pagedBlogposts)
             {
                 <a href="@post.Url(PublishedUrlProvider)" class="blogpost">
                     <div class="blogpost-meta">
