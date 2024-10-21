@@ -21,7 +21,6 @@ services:
     networks:
       - app-network
 
-
   sql-db:
     container_name: ${DOCKER_REGISTRY-}sql-db
     restart: unless-stopped

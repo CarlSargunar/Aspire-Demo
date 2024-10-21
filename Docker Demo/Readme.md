@@ -6,7 +6,7 @@ This sample application consists of several containers to create a website <COMP
 
 The following environment variables are used in the application. You can set up a `.env` file in the root of the project to set these variables. 
 
-**NOTE: The `.env` file is not included in the repository, it is ignored deliberately. You need to pick the lined relevat to your operating system - Windows or macOS/Linux**
+**NOTE: The `.env` file is not included in the repository, it is ignored deliberately. You need to pick the lined relevant to your operating system - Windows or macOS/Linux**
 
 
     # Windows (APPDATA typically set automatically)
