@@ -1,3 +1,5 @@
+using RabbitMQ.Client;
+using Umbraco.Cms.Core.Services;
 using UmbWebsite.Middleware;
 using UmbWebsite.Services;
 
@@ -7,8 +9,10 @@ public static class MyCustomBuilderExtensions
 {
     public static IUmbracoBuilder RegisterCustomServices(this IUmbracoBuilder builder)
     {
-        builder.Services.AddSingleton<IMessageService, MessageService>();
+
+        builder.Services.AddSingleton<IConnectionFactory, ConnectionFactory>();
         builder.Services.AddSingleton<IStartupFilter, MiddlewareStartupFilter>();
+        builder.Services.AddSingleton<IMessageService, MessageService>();
         return builder;
     }
 
