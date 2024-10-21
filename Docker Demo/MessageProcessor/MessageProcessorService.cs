@@ -1,9 +1,9 @@
 ﻿using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Text;
-using System.Text.Json;
-using DemoLib.Data;
+using System.Text.Json; 
 using DemoLib.Models;
+using MessageProcessor.Data;
 
 namespace MessageProcessor;
 public class RabbitMqListenerService : BackgroundService
@@ -42,7 +42,7 @@ public class RabbitMqListenerService : BackgroundService
     {
         using (var scope = _serviceProvider.CreateScope())
         {
-            var dbContext = scope.ServiceProvider.GetRequiredService<MessageDbContext>();
+            var dbContext = scope.ServiceProvider.GetRequiredService<MessageProcessorDBContext>();
             dbContext.Messages.Add(message);
             await dbContext.SaveChangesAsync();
         }
