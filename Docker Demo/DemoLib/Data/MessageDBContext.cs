@@ -11,6 +11,8 @@ namespace DemoLib.Data
     public class MessageDbContext : DbContext
     {
         public DbSet<Message> Messages { get; set; }
+        public DbSet<Analytics> Analytics { get; set; }
+        public DbSet<Email> Emails { get; set; }
 
         public MessageDbContext(DbContextOptions<MessageDbContext> options) : base(options)
         {
