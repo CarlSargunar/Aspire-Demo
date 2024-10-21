@@ -18,7 +18,7 @@ namespace UmbWebsite.Services
             // TODO: Move connection details to configuration
             var factory = new ConnectionFactory
             {
-                HostName = "rabbitmq",
+                HostName = "localhost",
                 UserName = "guest",
                 Password = "guest"
             };
@@ -36,13 +36,25 @@ namespace UmbWebsite.Services
         {
             var messageText = JsonSerializer.Serialize(message);
             var body = Encoding.UTF8.GetBytes(messageText);
+            var keyName = RoutingKeyName(message);
 
             _channel.BasicPublish(exchange: "",
-                                 routingKey: "messages",
+                                 routingKey: keyName,
                                  basicProperties: null,
                                  body: body);
 
-            _logger.LogInformation("Message sent to RabbitMQ");
+            _logger.LogInformation("Message sent to RabbitMQ with Routing Key {0}", keyName);
+        }
+
+        private static string RoutingKeyName(Message message)
+        {
+            var key = message.MessageType switch
+            {
+                MessageType.Email => "emails",
+                MessageType.Analytics => "analytics",
+                _ => "messages"
+            };
+            return key;
         }
 
         public void Dispose()

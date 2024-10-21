@@ -10,12 +10,14 @@ using Umbraco.Cms.Core.Web;
 using Umbraco.Cms.Infrastructure.Persistence;
 using Umbraco.Cms.Web.Website.Controllers;
 using UmbWebsite.Models;
+using UmbWebsite.Services;
 
 namespace UmbWebsite.Controllers
 {
     public class ContactFormController : SurfaceController
     {
         private readonly ILogger<ContactFormController> _logger;
+        private readonly IMessageService _messageService;
 
         public ContactFormController(ILogger<ContactFormController> logger,
                                      IUmbracoContextAccessor umbracoContextAccessor,
@@ -23,7 +25,8 @@ namespace UmbWebsite.Controllers
                                      ServiceContext services,
                                      AppCaches appCaches,
                                      IProfilingLogger profilingLogger,
-                                     IPublishedUrlProvider publishedUrlProvider) : base(umbracoContextAccessor,
+                                     IPublishedUrlProvider publishedUrlProvider,
+                                     IMessageService messageService) : base(umbracoContextAccessor,
                                                                                         databaseFactory,
                                                                                         services,
                                                                                         appCaches,
@@ -31,6 +34,7 @@ namespace UmbWebsite.Controllers
                                                                                         publishedUrlProvider)
         {
             _logger = logger;
+            _messageService = messageService;
         }
 
         [HttpPost]
@@ -49,12 +53,11 @@ namespace UmbWebsite.Controllers
                 var message = new Message
                 {
                     Name = model.Name,
-                    MessageText = model.Message,
+                    MessageBody = model.Message,
                     MessageType = MessageType.Email
                 };
 
-                // Send message to RabbitMQ
-                SendMessageToQueue(message);
+                _messageService.SendMessage(message);
             }
             catch (Exception ex)
             {
@@ -66,21 +69,6 @@ namespace UmbWebsite.Controllers
             TempData["Message"] = "Thanks for your email, someone will get back to you ASAP!";
             return RedirectToCurrentUmbracoPage();
         }
-
-        private void SendMessageToQueue(Message message)
-        {
-            var factory = new ConnectionFactory() { HostName = "localhost" }; // Replace with your RabbitMQ hostname
-            using (var connection = factory.CreateConnection())
-            using (var channel = connection.CreateModel())
-            {
-                channel.QueueDeclare(queue: "contact_form_queue", durable: false, exclusive: false, autoDelete: false, arguments: null);
-
-                var messageBody = JsonSerializer.Serialize(message);
-                var body = Encoding.UTF8.GetBytes(messageBody);
-
-                channel.BasicPublish(exchange: "", routingKey: "contact_form_queue", basicProperties: null, body: body);
-            }
-        }
-
+        
     }
 }

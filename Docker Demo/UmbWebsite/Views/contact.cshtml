@@ -1,5 +1,6 @@
 ﻿@using Umbraco.SampleSite.Models
 @using ContentModels = Umbraco.Cms.Web.Common.PublishedModels
+@using ContactFormViewModel = UmbWebsite.Models.ContactFormViewModel
 @inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<UmbWebsites.Models.Contact>
 @{
     Layout = "master.cshtml";
@@ -19,7 +20,7 @@
                 <h2>@Model.ContactFormHeader</h2>
                 @Model.ContactIntro
                 @{
-                   await Html.RenderPartialAsync("Partials/ContactForm", new ContactFormViewModel());
+                    await Html.RenderPartialAsync("Partials/ContactForm", new ContactFormViewModel());
                 }
             </div>
 
