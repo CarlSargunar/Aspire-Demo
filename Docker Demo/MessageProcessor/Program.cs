@@ -8,7 +8,7 @@ var builder = Host.CreateDefaultBuilder(args)
     .ConfigureServices((hostContext, services) =>
     {
         var connectionString = hostContext.Configuration.GetConnectionString("DefaultConnection");
-        services.AddDbContext<MessageProcessorDBContext>(options =>
+        services.AddDbContext<WorkerContext>(options =>
             options.UseSqlServer(connectionString));
 
         services.AddHostedService<Processor>();

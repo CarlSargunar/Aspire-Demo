@@ -39,7 +39,7 @@ namespace UmbWebsite.Services
             var keyName = RoutingKeyName(message);
 
             _channel.BasicPublish(exchange: "",
-                                 routingKey: keyName,
+                                 routingKey: "demo-message-queue",
                                  basicProperties: null,
                                  body: body);
 

@@ -42,6 +42,7 @@ public class Processor : BackgroundService
         var consumer = new EventingBasicConsumer(_channel);
         consumer.Received += async (model, ea) =>
         {
+            _logger.LogInformation("Message received from RabbitMQ.");
             var body = ea.Body.ToArray();
             var message = System.Text.Json.JsonSerializer.Deserialize<ServiceMessage>(body);
 
@@ -56,15 +57,17 @@ public class Processor : BackgroundService
         // Keep the service alive
         while (!stoppingToken.IsCancellationRequested)
         {
+            _logger.LogInformation("Processor running at: {time}", DateTimeOffset.Now);
             await Task.Delay(1000, stoppingToken);
         }
     }
 
     private async Task WriteTestMessageAsync()
     {
+        _logger.LogInformation("Writing test message to the database.");
         using (var scope = _scopeFactory.CreateScope())
         {
-            var dbContext = scope.ServiceProvider.GetRequiredService<MessageProcessorDBContext>();
+            var dbContext = scope.ServiceProvider.GetRequiredService<WorkerContext>();
             var testMessage = new ServiceMessage
             {
                 Name = "Test",
@@ -80,9 +83,10 @@ public class Processor : BackgroundService
 
     private async Task ProcessMessageAsync(ServiceMessage message)
     {
+        _logger.LogInformation("Processing message: {0}", message.MessageBody);
         using (var scope = _scopeFactory.CreateScope())
         {
-            var dbContext = scope.ServiceProvider.GetRequiredService<MessageProcessorDBContext>();
+            var dbContext = scope.ServiceProvider.GetRequiredService<WorkerContext>();
             dbContext.ServiceMessages.Add(message);
             await dbContext.SaveChangesAsync();
 
