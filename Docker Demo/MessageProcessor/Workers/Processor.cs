@@ -26,7 +26,7 @@ public class Processor : BackgroundService
         
         _connection = factory.CreateConnection();
         _channel = _connection.CreateModel();
-        _channel.QueueDeclare(queue: "messages",
+        _channel.QueueDeclare(queue: "demo-message-queue",
                              durable: false,
                              exclusive: false,
                              autoDelete: false,
@@ -51,7 +51,7 @@ public class Processor : BackgroundService
             await ProcessMessageAsync(message);
         };
 
-        _channel.BasicConsume(queue: "your_queue_name", autoAck: true, consumer: consumer);
+        _channel.BasicConsume(queue: "demo-message-queue", autoAck: true, consumer: consumer);
 
         // Keep the service alive
         while (!stoppingToken.IsCancellationRequested)

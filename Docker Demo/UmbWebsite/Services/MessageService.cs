@@ -25,7 +25,7 @@ namespace UmbWebsite.Services
 
             _connection = factory.CreateConnection();
             _channel = _connection.CreateModel();
-            _channel.QueueDeclare(queue: "messages",
+            _channel.QueueDeclare(queue: "demo-message-queue",
                                   durable: false,
                                   exclusive: false,
                                   autoDelete: false,
@@ -52,7 +52,7 @@ namespace UmbWebsite.Services
             {
                 MessageType.Email => "emails",
                 MessageType.Analytics => "analytics",
-                _ => "messages"
+                _ => "demo-message-queue"
             };
             return key;
         }
