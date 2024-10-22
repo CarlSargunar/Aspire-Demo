@@ -14,11 +14,11 @@ services:
   api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_HTTP_PORTS=8080
-      - ASPNETCORE_HTTPS_PORTS=8081
+      - ASPNETCORE_HTTP_PORTS=8082
+      - ASPNETCORE_HTTPS_PORTS=8083
     ports:
-      - "8080"
-      - "8081"
+      - "8082"
+      - "8083"
     volumes:
       - ${USER_SECRETS_PATH}:/home/app/microsoft/usersecrets:ro
       - ${HTTPS_CERT_PATH}:/home/app/aspnet/https:ro

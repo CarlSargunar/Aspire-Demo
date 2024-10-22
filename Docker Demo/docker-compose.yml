@@ -1,7 +1,6 @@
 services:
   umbwebsite:
     image: ${DOCKER_REGISTRY-}umb-website
-    restart: unless-stopped
     build:
       context: .
       dockerfile: UmbWebsite/Dockerfile
@@ -12,7 +11,6 @@ services:
 
   api:
     image: ${DOCKER_REGISTRY-}api
-    restart: unless-stopped
     build:
       context: .
       dockerfile: DemoApi/Dockerfile
@@ -23,7 +21,6 @@ services:
  
   message-processor:
     image: ${DOCKER_REGISTRY-}message-processor
-    restart: unless-stopped
     build:
       context: .
       dockerfile: MessageProcessor/Dockerfile
