@@ -15,20 +15,10 @@ namespace DemoApi.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Define the primary key and relationships
-            modelBuilder.Entity<ServiceMessage>()
-                .HasKey(m => m.MessageId);
-
-            modelBuilder.Entity<Email>()
-                .HasKey(e => e.Id);
-
             modelBuilder.Entity<Email>()
                 .HasOne(e => e.ServiceMessage)
                 .WithMany()
                 .HasForeignKey(e => e.MessageId);
-
-            modelBuilder.Entity<PageView>()
-                .HasKey(a => a.Id);
         }
     } 
 }
