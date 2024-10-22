@@ -64,7 +64,6 @@ public class Processor : BackgroundService
 
     private async Task WriteTestMessageAsync()
     {
-        _logger.LogInformation("Writing test message to the database.");
         using (var scope = _scopeFactory.CreateScope())
         {
             var dbContext = scope.ServiceProvider.GetRequiredService<WorkerContext>();

@@ -61,3 +61,10 @@ To build the entire application, use the following command:
     docker-compose up --build
 
 
+## EF Core Migrations
+
+To initialize the database, use the following command:
+
+    
+    
+

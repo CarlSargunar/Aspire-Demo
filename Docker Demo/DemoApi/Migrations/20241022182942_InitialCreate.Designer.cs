@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DemoApi.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
-    [Migration("20241022153849_InitialCreate")]
+    [Migration("20241022182942_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -41,8 +41,8 @@ namespace DemoApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("MessageId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("MessageId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -80,9 +80,11 @@ namespace DemoApi.Migrations
 
             modelBuilder.Entity("DemoLib.Models.ServiceMessage", b =>
                 {
-                    b.Property<Guid>("MessageId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -91,6 +93,9 @@ namespace DemoApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid>("MessageGuid")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int>("MessageType")
                         .HasColumnType("int");
 
@@ -98,7 +103,7 @@ namespace DemoApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("MessageId");
+                    b.HasKey("Id");
 
                     b.ToTable("ServiceMessages");
                 });

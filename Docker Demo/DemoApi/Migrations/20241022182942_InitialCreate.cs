@@ -30,7 +30,9 @@ namespace DemoApi.Migrations
                 name: "ServiceMessages",
                 columns: table => new
                 {
-                    MessageId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    MessageGuid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     MessageBody = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -38,7 +40,7 @@ namespace DemoApi.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ServiceMessages", x => x.MessageId);
+                    table.PrimaryKey("PK_ServiceMessages", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -47,7 +49,7 @@ namespace DemoApi.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    MessageId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    MessageId = table.Column<int>(type: "int", nullable: false),
                     EmailAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Message = table.Column<string>(type: "nvarchar(max)", nullable: false)
@@ -59,7 +61,7 @@ namespace DemoApi.Migrations
                         name: "FK_Emails_ServiceMessages_MessageId",
                         column: x => x.MessageId,
                         principalTable: "ServiceMessages",
-                        principalColumn: "MessageId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
