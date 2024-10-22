@@ -4,7 +4,6 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 USER app
 WORKDIR /app
 EXPOSE 8080
-EXPOSE 8081
 
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
@@ -32,6 +31,5 @@ COPY --from=publish /app/publish .
 # CREATE a folder in the output container for media /wwwroot/media. 
 USER root
 RUN mkdir /app/wwwroot/media
-RUN chmod -R 755 /app/wwwroot/media
 
 ENTRYPOINT ["dotnet", "UmbWebsite.dll"]
