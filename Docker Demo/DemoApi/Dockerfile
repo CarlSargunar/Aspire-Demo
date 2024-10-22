@@ -24,9 +24,6 @@ FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
 RUN dotnet publish "./DemoApi.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
-# Set an env variable to mark this as a Release configuration
-ENV ASPNETCORE_ENVIRONMENT=Release
-
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .

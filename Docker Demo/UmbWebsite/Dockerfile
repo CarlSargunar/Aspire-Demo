@@ -24,10 +24,14 @@ FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
 RUN dotnet publish "./UmbWebsite.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
-# Set an env variable to mark this as a Release configuration
-ENV ASPNETCORE_ENVIRONMENT=Release
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+
+# CREATE a folder in the output container for media /wwwroot/media. 
+USER root
+RUN mkdir /app/wwwroot/media
+RUN chmod -R 755 /app/wwwroot/media
+
 ENTRYPOINT ["dotnet", "UmbWebsite.dll"]
