@@ -7,4 +7,7 @@ public class Email
     public string EmailAddress { get; set; }
     public string Name { get; set; }
     public string Message { get; set; }
+
+            // Navigation property
+        public ServiceMessage ServiceMessage { get; set; }
 }
