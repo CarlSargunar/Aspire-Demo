@@ -10,10 +10,13 @@ EXPOSE 8083
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["DemoApi.csproj", "DemoApi/"]
+COPY ["DemoApi/DemoApi.csproj", "DemoApi/"]
+COPY ["DemoLib/DemoLib.csproj", "DemoLib/"]
+
+RUN dotnet restore "./DemoLib/DemoLib.csproj"
 RUN dotnet restore "./DemoApi/DemoApi.csproj"
-WORKDIR /src/DemoApi
 COPY . .
+WORKDIR /src/DemoApi
 RUN dotnet build "./DemoApi.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish

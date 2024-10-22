@@ -7,10 +7,13 @@ WORKDIR /app
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["MessageProcessor.csproj", "MessageProcessor/"]
+COPY ["MessageProcessor/MessageProcessor.csproj", "MessageProcessor/"]
+COPY ["DemoLib/DemoLib.csproj", "DemoLib/"]
+
 RUN dotnet restore "./MessageProcessor/MessageProcessor.csproj"
-WORKDIR /src/MessageProcessor
+RUN dotnet restore "./MessageProcessor/MessageProcessor.csproj"
 COPY . .
+WORKDIR /src/MessageProcessor
 RUN dotnet build "./MessageProcessor.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish

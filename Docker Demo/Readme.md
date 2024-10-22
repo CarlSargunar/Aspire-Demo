@@ -33,7 +33,7 @@ The RabbitMQ container is configured to use the default username and password of
 
 To run the management interface, navigate to `http://localhost:15672` in your browser. The default username and password are `guest`.
 
-### SQLDb
+### SQLDb - Database Container
 
 To build and run the local SQLDb container, use the following command:
 
@@ -42,6 +42,11 @@ To build and run the local SQLDb container, use the following command:
     docker build --tag=sqldb ./SQLDb
     docker run -d -p 1433:1433 --name sqldb sqldb    
 
+### Application Containers
+
+    docker build --tag=demoapi -f DemoAPI/Dockerfile .
+    docker build --tag=message-processor -f MessageProcessor/Dockerfile .
+    docker build --tag=umbwebsite -f UmbWebsite/Dockerfile .
 
 ## Configuration for building the application
 
