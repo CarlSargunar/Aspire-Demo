@@ -65,6 +65,15 @@ To build the entire application, use the following command:
 
 To initialize the database, use the following command:
 
-    
-    
+    dotnet ef migrations add InitialCreate
+    dotnet ef database update
+
+## Set-up Umbraco
+
+
+    dotnet new install Umbraco.Templates::13.5.2 --force
+    dotnet new umbraco --force -n "UmbWebsite" --friendly-name "Administrator" --email "admin@example.com" --password "1234567890" --connection-string "server=localhost;database=UmbracoDb;user id=sa;password='SQL_password123';TrustServerCertificate=true;" --connection-string-provider-name "Microsoft.Data.SqlClient"
+    dotnet add "UmbWebsite" package Umbraco.TheStarterKit --version 13.0
+    dotnet run --project "UmbWebsite"
+
 
