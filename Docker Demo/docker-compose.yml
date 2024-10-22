@@ -3,8 +3,8 @@ services:
     image: ${DOCKER_REGISTRY-}umb-website
     restart: unless-stopped
     build:
-      context: ./UmbWebsite
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: UmbWebsite/Dockerfile
     depends_on:
       - sql-db    
     networks:
@@ -14,8 +14,8 @@ services:
     image: ${DOCKER_REGISTRY-}api
     restart: unless-stopped
     build:
-      context: ./DemoApi
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: DemoApi/Dockerfile
     depends_on:
       - sql-db    
     networks:
@@ -25,8 +25,8 @@ services:
     image: ${DOCKER_REGISTRY-}message-processor
     restart: unless-stopped
     build:
-      context: ./MessageProcessor
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: MessageProcessor/Dockerfile
     depends_on:
       - sql-db    
     networks:
@@ -36,8 +36,8 @@ services:
     container_name: ${DOCKER_REGISTRY-}sql-db
     restart: unless-stopped
     build:
-      context: ./SQLDb
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: SQLDb/Dockerfile
     ports:
      - "1433:1433"
     networks:
