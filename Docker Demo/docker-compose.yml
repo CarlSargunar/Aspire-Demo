@@ -1,26 +1,31 @@
 services:
   umbwebsite:
-    image: ${DOCKER_REGISTRY-}umb-website
+    image: umb-website
     build:
       context: .
       dockerfile: UmbWebsite/Dockerfile
+    ports:
+      - "8080"
     depends_on:
       - sql-db    
     networks:
       - app-network
 
   api:
-    image: ${DOCKER_REGISTRY-}api
+    image: api
     build:
       context: .
       dockerfile: DemoApi/Dockerfile
+    ports:
+      - "8082"
     depends_on:
       - sql-db    
     networks:
       - app-network
  
   message-processor:
-    image: ${DOCKER_REGISTRY-}message-processor
+    image: message-processor
+    restart: unless-stopped
     build:
       context: .
       dockerfile: MessageProcessor/Dockerfile
@@ -30,7 +35,7 @@ services:
       - app-network
 
   sql-db:
-    container_name: ${DOCKER_REGISTRY-}sql-db
+    container_name: sql-db
     restart: unless-stopped
     build:
       context: .

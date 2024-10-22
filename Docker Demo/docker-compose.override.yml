@@ -3,26 +3,13 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_HTTP_PORTS=8080
-    ports:
-      - "8080"
-    # volumes:
-    #   - ${USER_SECRETS_PATH}:/home/app/microsoft/usersecrets:ro
-    #   - ${HTTPS_CERT_PATH}:/home/app/aspnet/https:ro
 
   api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_HTTP_PORTS=8082
-    ports:
-      - "8082"
-    # volumes:
-    #   - ${USER_SECRETS_PATH}:/home/app/microsoft/usersecrets:ro
-    #   - ${HTTPS_CERT_PATH}:/home/app/aspnet/https:ro
 
   message-processor:
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
 
-  sql-db:
-    ports:
-     - "1433:1433"
