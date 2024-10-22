@@ -5,7 +5,7 @@ using UmbWebsite.Services;
 
 namespace UmbWebsite.Configuration;
 
-public static class MyCustomBuilderExtensions
+public static class MyBuilderExtensions
 {
     public static IUmbracoBuilder RegisterCustomServices(this IUmbracoBuilder builder)
     {

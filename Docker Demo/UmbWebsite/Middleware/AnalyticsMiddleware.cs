@@ -8,20 +8,18 @@ using UmbWebsite.Services;
 public class AnalyticsMiddleware
 {
     private readonly RequestDelegate _next;
-    private readonly IConnectionFactory _connectionFactory;
     private readonly IMessageService _messageService;
 
-    public AnalyticsMiddleware(RequestDelegate next, IConnectionFactory connectionFactory, IMessageService messageService)
+    public AnalyticsMiddleware(RequestDelegate next, IMessageService messageService)
     {
         _next = next;
-        _connectionFactory = connectionFactory;
         _messageService = messageService;
     }
 
     public async Task InvokeAsync(HttpContext context)
     {
         // Check if the request is for static assets (CSS/JS/images)
-        if (!IsStaticAsset(context.Request.Path))
+        if (context.Request.Method == HttpMethods.Get && !IsStaticAsset(context.Request.Path))
         {
             var message = new ServiceMessage
             {

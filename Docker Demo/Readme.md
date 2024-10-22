@@ -23,7 +23,7 @@ Or the alternative is to set a universal dockerfile. Needs to be tested
     HTTPS_CERT_PATH=${APPDATA:-${HOME}/.aspnet/https}
 
 
-## Notes
+## Running individual Containers
 
 ### RabbitMQ
 
@@ -48,27 +48,23 @@ To build and run the local SQLDb container, use the following command:
     docker build --tag=message-processor -f MessageProcessor/Dockerfile .
     docker build --tag=umbwebsite -f UmbWebsite/Dockerfile .
 
-## Configuration for building the application
-
-The docker compose file is configured to use the following environment variables:
-
-- DOCKER_REGISTRY - The registry to use for the images. If null or not set, the images will be built locally.
-- USER_SECRETS_PATH - The path to the user secrets directory.
-- HTTPS_CERT_PATH - The path to the HTTPS certificate directory.
+## Running the Application
 
 To build the entire application, use the following command:
 
     docker-compose up --build
 
 
-## EF Core Migrations
+## Notes (mostly for myself)
+
+### EF Core Migrations
 
 To initialize the database, use the following command:
 
     dotnet ef migrations add InitialCreate
     dotnet ef database update
 
-## Set-up Umbraco
+### Set-up Umbraco
 
 
     dotnet new install Umbraco.Templates::13.5.2 --force
