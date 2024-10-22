@@ -72,7 +72,7 @@ namespace DemoApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Analytics");
+                    b.ToTable("PageViews");
                 });
 
             modelBuilder.Entity("DemoLib.Models.ServiceMessage", b =>
@@ -97,7 +97,7 @@ namespace DemoApi.Migrations
 
                     b.HasKey("MessageId");
 
-                    b.ToTable("Messages");
+                    b.ToTable("ServiceMessages");
                 });
 
             modelBuilder.Entity("DemoLib.Models.Email", b =>

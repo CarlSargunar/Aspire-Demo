@@ -5,6 +5,7 @@ namespace DemoLib.Enumerations
         Undefines = 0,
         Analytics = 1,
         Email = 2,
-        Exception = 3
+        Exception = 3,
+        Information = 4
     }
 }

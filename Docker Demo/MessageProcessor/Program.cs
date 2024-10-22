@@ -1,7 +1,17 @@
-using MessageProcessor;
+using MessageProcessor.Data;
+using MessageProcessor.Workers;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.EntityFrameworkCore;
 
-var builder = Host.CreateApplicationBuilder(args);
-builder.Services.AddHostedService<Worker>();
+var builder = Host.CreateDefaultBuilder(args)
+    .ConfigureServices((hostContext, services) =>
+    {
+        services.AddDbContext<MessageProcessorDBContext>(options =>
+            options.UseSqlServer("DefaultConnection"));
 
-var host = builder.Build();
-host.Run();
+        services.AddHostedService<Processor>();
+    });
+
+var app = builder.Build();
+await app.RunAsync();

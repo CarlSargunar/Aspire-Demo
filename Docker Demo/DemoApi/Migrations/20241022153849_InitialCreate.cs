@@ -12,7 +12,7 @@ namespace DemoApi.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Analytics",
+                name: "PageViews",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -23,11 +23,11 @@ namespace DemoApi.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Analytics", x => x.Id);
+                    table.PrimaryKey("PK_PageViews", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Messages",
+                name: "ServiceMessages",
                 columns: table => new
                 {
                     MessageId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -38,7 +38,7 @@ namespace DemoApi.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Messages", x => x.MessageId);
+                    table.PrimaryKey("PK_ServiceMessages", x => x.MessageId);
                 });
 
             migrationBuilder.CreateTable(
@@ -56,9 +56,9 @@ namespace DemoApi.Migrations
                 {
                     table.PrimaryKey("PK_Emails", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Emails_Messages_MessageId",
+                        name: "FK_Emails_ServiceMessages_MessageId",
                         column: x => x.MessageId,
-                        principalTable: "Messages",
+                        principalTable: "ServiceMessages",
                         principalColumn: "MessageId",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -73,13 +73,13 @@ namespace DemoApi.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Analytics");
-
-            migrationBuilder.DropTable(
                 name: "Emails");
 
             migrationBuilder.DropTable(
-                name: "Messages");
+                name: "PageViews");
+
+            migrationBuilder.DropTable(
+                name: "ServiceMessages");
         }
     }
 }

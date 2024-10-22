@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MessageProcessor.Data
 {
-    internal class MessageProcessorDBContext : DbContext
+    public class MessageProcessorDBContext : DbContext
     {
         public DbSet<ServiceMessage> ServiceMessages { get; set; }
         public DbSet<PageView> PageViews { get; set; }
