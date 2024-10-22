@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace DemoLib.Models;
-public class Analytics
+public class PageView
 {
     public int Id { get; set; }
     public string URL { get; set; }

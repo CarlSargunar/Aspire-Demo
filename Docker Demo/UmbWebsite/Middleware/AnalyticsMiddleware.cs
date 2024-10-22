@@ -23,7 +23,7 @@ public class AnalyticsMiddleware
         // Check if the request is for static assets (CSS/JS/images)
         if (!IsStaticAsset(context.Request.Path))
         {
-            var message = new Message
+            var message = new ServiceMessage
             {
                 Name = "URL",
                 MessageBody = context.Request.Path,

@@ -2,7 +2,7 @@
 
 namespace DemoLib.Models;
 
-public class Message
+public class ServiceMessage
 {
     public Guid MessageId { get; set; } = Guid.NewGuid();
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;

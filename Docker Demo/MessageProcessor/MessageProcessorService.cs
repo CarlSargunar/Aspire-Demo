@@ -28,7 +28,7 @@ public class RabbitMqListenerService : BackgroundService
         {
             var body = ea.Body.ToArray();
             var messageString = Encoding.UTF8.GetString(body);
-            var message = JsonSerializer.Deserialize<Message>(messageString);
+            var message = JsonSerializer.Deserialize<ServiceMessage>(messageString);
 
             // Handle message - e.g., save to DB
             await SaveMessageAsync(message);
@@ -38,12 +38,12 @@ public class RabbitMqListenerService : BackgroundService
         return Task.CompletedTask;
     }
 
-    private async Task SaveMessageAsync(Message message)
+    private async Task SaveMessageAsync(ServiceMessage message)
     {
         using (var scope = _serviceProvider.CreateScope())
         {
             var dbContext = scope.ServiceProvider.GetRequiredService<MessageProcessorDBContext>();
-            dbContext.Messages.Add(message);
+            dbContext.ServiceMessages.Add(message);
             await dbContext.SaveChangesAsync();
         }
     }

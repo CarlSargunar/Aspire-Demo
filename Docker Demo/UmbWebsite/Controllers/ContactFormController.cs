@@ -50,7 +50,7 @@ namespace UmbWebsite.Controllers
             try
             {
                 // Work with form data here
-                var message = new Message
+                var message = new ServiceMessage
                 {
                     Name = model.Name,
                     MessageBody = model.Message,

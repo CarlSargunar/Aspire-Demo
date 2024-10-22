@@ -32,7 +32,7 @@ namespace UmbWebsite.Services
                                   arguments: null);
         }
 
-        public void SendMessage(Message message)
+        public void SendMessage(ServiceMessage message)
         {
             var messageText = JsonSerializer.Serialize(message);
             var body = Encoding.UTF8.GetBytes(messageText);
@@ -46,7 +46,7 @@ namespace UmbWebsite.Services
             _logger.LogInformation("Message sent to RabbitMQ with Routing Key {0}", keyName);
         }
 
-        private static string RoutingKeyName(Message message)
+        private static string RoutingKeyName(ServiceMessage message)
         {
             var key = message.MessageType switch
             {

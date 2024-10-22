@@ -10,8 +10,8 @@ namespace MessageProcessor.Data
 {
     internal class MessageProcessorDBContext : DbContext
     {
-        public DbSet<Message> Messages { get; set; }
-        public DbSet<Analytics> Analytics { get; set; }
+        public DbSet<ServiceMessage> ServiceMessages { get; set; }
+        public DbSet<PageView> PageViews { get; set; }
         public DbSet<Email> Emails { get; set; }
 
         public MessageProcessorDBContext(DbContextOptions<MessageProcessorDBContext> options) : base(options)
