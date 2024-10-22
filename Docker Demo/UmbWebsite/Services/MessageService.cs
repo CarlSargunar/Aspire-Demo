@@ -1,5 +1,6 @@
 using System.Text;
 using System.Text.Json;
+using DemoLib.Config;
 using RabbitMQ.Client;
 
 namespace UmbWebsite.Services
@@ -8,19 +9,26 @@ namespace UmbWebsite.Services
     {
         private readonly ILogger<MessageService> _logger;
         private readonly IConnection _connection;
+        private readonly IConfiguration _configuration;
         private readonly IModel _channel;
 
-        public MessageService(ILogger<MessageService> logger)
+        public MessageService(ILogger<MessageService> logger, IConfiguration configuration)
         {
+            _configuration = configuration;
             _logger = logger;
 
+            var rabbitMqConfig = _configuration.GetSection("RMQConfig").Get<RmqConfig>();
+            if (rabbitMqConfig == null)
+            {
+                throw new ArgumentNullException("Rabbit MQ Config not set");
+            }
+            _logger.LogInformation("RabbitMQ Config: {0}", rabbitMqConfig.HostName);
 
-            // TODO: Move connection details to configuration
             var factory = new ConnectionFactory
             {
-                HostName = "localhost",
-                UserName = "guest",
-                Password = "guest"
+                HostName = rabbitMqConfig.HostName,
+                UserName = rabbitMqConfig.UserName,
+                Password = rabbitMqConfig.Password
             };
 
             _connection = factory.CreateConnection();
