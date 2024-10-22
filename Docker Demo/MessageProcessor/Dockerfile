@@ -12,6 +12,7 @@ COPY ["DemoLib/DemoLib.csproj", "DemoLib/"]
 
 RUN dotnet restore "./MessageProcessor/MessageProcessor.csproj"
 RUN dotnet restore "./MessageProcessor/MessageProcessor.csproj"
+
 COPY . .
 WORKDIR /src/MessageProcessor
 RUN dotnet build "./MessageProcessor.csproj" -c $BUILD_CONFIGURATION -o /app/build

@@ -15,6 +15,7 @@ COPY ["DemoLib/DemoLib.csproj", "DemoLib/"]
 
 RUN dotnet restore "./DemoLib/DemoLib.csproj"
 RUN dotnet restore "./DemoApi/DemoApi.csproj"
+
 COPY . .
 WORKDIR /src/DemoApi
 RUN dotnet build "./DemoApi.csproj" -c $BUILD_CONFIGURATION -o /app/build
