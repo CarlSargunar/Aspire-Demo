@@ -1,0 +1,73 @@
+services:
+  umbwebsite:
+    image: umb-website
+    build:
+      context: .
+      dockerfile: UmbWebsite/Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - sql-db    
+    networks:
+      - app-network
+
+  api:
+    image: api
+    build:
+      context: .
+      dockerfile: DemoApi/Dockerfile
+    ports:
+      - "8082:8082"
+    depends_on:
+      - sql-db    
+    networks:
+      - app-network
+
+
+  analyticsapp:
+    image: analyticsapp
+    build:
+      context: .
+      dockerfile: AnalyticsApp/Dockerfile
+    ports:
+      - "8084:80"
+    depends_on:
+      - sql-db    
+    networks:
+      - app-network
+
+  message-processor:
+    image: message-processor
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: MessageProcessor/Dockerfile
+    depends_on:
+      - sql-db    
+    networks:
+      - app-network
+
+  sql-db:
+    container_name: sql-db
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: SQLDb/Dockerfile
+    ports:
+     - "1433:1433"
+    networks:
+      - app-network
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    restart: unless-stopped
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - app-network    
+
+networks:
+  app-network:
+    driver: bridge
+

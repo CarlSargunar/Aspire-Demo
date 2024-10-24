@@ -1,0 +1,20 @@
+services:
+  umbwebsite:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_HTTP_PORTS=8080
+
+  api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_HTTP_PORTS=8082
+
+  analyticsapp:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_HTTP_PORTS=8084
+
+  message-processor:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+

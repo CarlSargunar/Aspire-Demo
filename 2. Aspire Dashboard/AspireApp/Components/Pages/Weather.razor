@@ -1,0 +1,73 @@
+﻿@page "/weather"
+@attribute [StreamRendering]
+
+@inject HttpClient Http
+
+<PageTitle>Weather</PageTitle>
+
+<h1>Weather</h1>
+
+<p>This component demonstrates showing British Weather data from an external API.</p>
+
+@if (isError)
+{
+    <h2>Error!</h2>
+    <p><em>There was an error loading the weather data. Please try again later.</em></p>
+}
+else if (forecasts == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Temp. (C)</th>
+                <th>Temp. (F)</th>
+                <th>Summary</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var forecast in forecasts)
+            {
+                <tr>
+                    <td>@forecast.Date.ToShortDateString()</td>
+                    <td>@forecast.TemperatureC</td>
+                    <td>@forecast.TemperatureF</td>
+                    <td>@forecast.Summary</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private WeatherForecast[]? forecasts;
+    private bool isError = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            // Call the weather API instead of generating local weather
+            forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("http://localhost:5074/weatherforecast");
+        }
+        catch (Exception ex)
+        {
+            // Log the error if needed and show an error message
+            isError = true;
+            // You can log ex.Message or do other error handling here if needed
+        }
+    }
+
+    // This class matches the structure of your API data
+    private record WeatherForecast
+    {
+        public DateTime Date { get; set; }
+        public int TemperatureC { get; set; }
+        public string? Summary { get; set; }
+        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+    }
+}
