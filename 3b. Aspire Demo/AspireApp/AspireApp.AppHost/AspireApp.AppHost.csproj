@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\AnalyticsApp\AnalyticsApp.csproj" />
     <ProjectReference Include="..\..\DemoApi\DemoApi.csproj" />
     <ProjectReference Include="..\..\UmbWebsite\UmbWebsite.csproj" />
   </ItemGroup>

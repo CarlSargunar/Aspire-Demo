@@ -12,5 +12,6 @@ builder.AddProject<Projects.UmbWebsite>("umbwebsite")
 builder.AddProject<Projects.DemoApi>("demoapi");
 
 // Add Analytics Project
+builder.AddProject<Projects.AnalyticsApp>("analytics");
 
 builder.Build().Run();
