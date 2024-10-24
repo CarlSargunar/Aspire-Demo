@@ -1,7 +1,10 @@
-using System.Text;
+﻿using System.Text;
 using System.Text.Json;
-using DemoLib.Config;
 using RabbitMQ.Client;
+using RabbitMQ.Client;
+using System.Text;
+using DemoLib.Models;
+using Umbraco.Cms.Core.Sync;
 
 namespace UmbWebsite.Services
 {
@@ -9,29 +12,12 @@ namespace UmbWebsite.Services
     {
         private readonly ILogger<MessageService> _logger;
         private readonly IConnection _connection;
-        private readonly IConfiguration _configuration;
         private readonly IModel _channel;
 
-        public MessageService(ILogger<MessageService> logger, IConfiguration configuration)
+        public MessageService(ILogger<MessageService> logger, IConnection connection)
         {
-            _configuration = configuration;
             _logger = logger;
-
-            var rabbitMqConfig = _configuration.GetSection("RMQConfig").Get<RmqConfig>();
-            if (rabbitMqConfig == null)
-            {
-                throw new ArgumentNullException("Rabbit MQ Config not set");
-            }
-            _logger.LogInformation("RabbitMQ Config: {0}", rabbitMqConfig.HostName);
-
-            var factory = new ConnectionFactory
-            {
-                HostName = rabbitMqConfig.HostName,
-                UserName = rabbitMqConfig.UserName,
-                Password = rabbitMqConfig.Password
-            };
-
-            _connection = factory.CreateConnection();
+            _connection = connection;
             _channel = _connection.CreateModel();
             _channel.QueueDeclare(queue: "demo-message-queue",
                                   durable: false,
@@ -40,7 +26,7 @@ namespace UmbWebsite.Services
                                   arguments: null);
         }
 
-        public void SendMessage(ServiceMessage message)
+        public void SendMessage(DemoLib.Models.ServiceMessage message)
         {
             var messageText = JsonSerializer.Serialize(message);
             var body = Encoding.UTF8.GetBytes(messageText);
@@ -58,8 +44,8 @@ namespace UmbWebsite.Services
         {
             var key = message.MessageType switch
             {
-                MessageType.Email => "emails",
-                MessageType.Analytics => "analytics",
+                DemoLib.Enumerations.MessageType.Email => "emails",
+                DemoLib.Enumerations.MessageType.Analytics => "analytics",
                 _ => "demo-message-queue"
             };
             return key;
@@ -75,5 +61,5 @@ namespace UmbWebsite.Services
     public interface IMessageService
     {
         void SendMessage(ServiceMessage message);
-    }    
+    }
 }

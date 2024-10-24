@@ -9,8 +9,8 @@ Run Containers
 ## SLN
 
     dotnet new sln --name "Aspire Demo"
-    dotnet new aspire-apphost -o DemoAppHost
-    dotnet sln add DemoAppHost
+    dotnet new aspire-apphost -o AppHost
+    dotnet sln add AppHost
     dotnet new aspire-servicedefaults -o DemoServiceDefaults
     dotnet sln add DemoServiceDefaults
 
@@ -24,7 +24,33 @@ Run Containers
 ### References
 
     dotnet add UmbWebsite reference DemoServiceDefaults
-    dotnet add DemoAppHost reference UmbWebsite
+    dotnet add AppHost reference UmbWebsite
+
+
+## Program.cs
+
+Add nuget Aspire.RammitMQ.Client
+
+Update Program.cs (See 3b Aspire Demo Files)
+    
+Add Services
+Add middleware
+Add Configuration
+
+## Projects
+
+Copy over 
+- DemoLib
+- DemoApi
+- AnalyticsApp
+
+## MessageProcessor
+
+New Console App - Processor
+- Program.cs
+- Worker
+
+
 
 
 ## Aspire App Host
