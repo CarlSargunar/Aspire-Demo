@@ -6,6 +6,27 @@ Run Containers
 
     docker run -d --name sql_server -m 2g -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=SQL_password123' -p 1433:1433 mcr.microsoft.com/mssql/server:2022-latest
 
+## SLN
+
+    dotnet new sln --name "Aspire Demo"
+    dotnet new aspire-apphost -o DemoAppHost
+    dotnet sln add DemoAppHost
+    dotnet new aspire-servicedefaults -o DemoServiceDefaults
+    dotnet sln add DemoServiceDefaults
+
+### Umbraco
+
+    dotnet new install Umbraco.Templates::13.5.2 --force
+    dotnet new umbraco --force -n "UmbWebsite" --friendly-name "Administrator" --email "admin@example.com" --password "1234567890" --development-database-type SQLite
+    dotnet add "UmbWebsite" package Umbraco.TheStarterKit --version 13.0
+    dotnet sln add UmbWebsite
+
+### References
+
+    dotnet add UmbWebsite reference DemoServiceDefaults
+    dotnet add DemoAppHost reference UmbWebsite
+
+
 ## Aspire App Host
 
     // Add RabbitMQ to the application
