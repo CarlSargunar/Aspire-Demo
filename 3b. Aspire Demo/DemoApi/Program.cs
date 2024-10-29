@@ -16,6 +16,8 @@ builder.Services.AddDbContext<ApiDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
+
+
 // Add CORS and define a policy to allow everything - this is just for demo purposes
 builder.Services.AddCors(options =>
 {

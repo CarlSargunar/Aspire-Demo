@@ -27,5 +27,6 @@ You need the following installed to run the demo:
 
 - https://learn.microsoft.com/en-us/dotnet/aspire/ : Microsoft documentation for .NET Aspire
 - https://learn.microsoft.com/dotnet/aspire/whats-new/dotnet-aspire-9-release-candidate-1 - What's new in .NET Aspire 9 RC1
+- https://learn.microsoft.com/en-us/dotnet/aspire/fundamentals/integrations-overview : Integrations overview
 - https://adolfi.dev/blog/umbraco-aspire/ : An intro to using Umbraco with .NET Aspire
 - https://github.com/dotnet/aspire-samples : .NET Aspire samples

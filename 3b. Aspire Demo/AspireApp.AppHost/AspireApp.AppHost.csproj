@@ -12,12 +12,13 @@
   <ItemGroup>
     <PackageReference Include="Aspire.Hosting.AppHost" Version="8.2.1" />
     <PackageReference Include="Aspire.Hosting.RabbitMQ" Version="8.2.2" />
+    <PackageReference Include="Aspire.Hosting.SqlServer" Version="8.2.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\AnalyticsApp\AnalyticsApp.csproj" />
     <ProjectReference Include="..\DemoApi\DemoApi.csproj" />
-    <ProjectReference Include="..\Processor\Processor.csproj" />
+    <ProjectReference Include="..\MessageProcessor\MessageProcessor.csproj" />
     <ProjectReference Include="..\UmbWebsite\UmbWebsite.csproj" />
   </ItemGroup>
 
