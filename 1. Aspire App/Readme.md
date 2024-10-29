@@ -6,9 +6,7 @@ Check it works before Aspire
     dotnet run --project .\AspireApp\
 
 
-
-
-## Starting the Container
+## Starting the Aspire Dashboard Container
 
 To start the container, run the following command: 
 
