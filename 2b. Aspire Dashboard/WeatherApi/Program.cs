@@ -6,6 +6,10 @@ using WeatherApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Add service defaults & Aspire components.
+builder.AddServiceDefaults();
+//builder.AddRedisOutputCache("cache");
+
 // Add services to the container.
 builder.Services.AddControllers(); // Add this to support controllers
 builder.Services.AddEndpointsApiExplorer();
@@ -13,45 +17,6 @@ builder.Services.AddSwaggerGen();
 
 // Inject my test service
 builder.Services.AddScoped<ITemperatureService, TemperatureService>();
-
-//// Configure OTLP exporter
-//var openTelemetryUri = new Uri(builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"]);
-
-//// Configure Logging
-//builder.Logging.AddOpenTelemetry(log =>
-//{
-//   log.AddOtlpExporter(opt => opt.Endpoint = openTelemetryUri);
-//   log.IncludeScopes = true;
-//   log.IncludeFormattedMessage = true;
-//});
-
-
-//// Configure OpenTelemetry
-//builder.Services.AddOpenTelemetry()
-//   .ConfigureResource(res => res
-//       .AddService(WeatherMetrics.ServiceName))
-//   .WithMetrics(metrics =>
-//   {
-//       metrics
-//           .AddHttpClientInstrumentation()
-//           .AddAspNetCoreInstrumentation()
-//           .AddRuntimeInstrumentation();
-
-//       metrics.AddMeter(WeatherMetrics.Meter.Name);
-
-//       metrics.AddOtlpExporter(opt => opt.Endpoint = openTelemetryUri);
-//   })
-//   .WithTracing(tracing =>
-//       {
-
-//           tracing
-//               .AddAspNetCoreInstrumentation()
-//               .AddHttpClientInstrumentation();
-
-//           tracing.AddOtlpExporter(opt => opt.Endpoint = openTelemetryUri);
-
-//       }
-//   );
 
 
 var app = builder.Build();

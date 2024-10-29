@@ -1,5 +1,11 @@
 # Running the Aspire Dashboard Standalonw
 
+Check it works before Aspire
+
+    dotnet run --project .\WeatherApi\
+    dotnet run --project .\AspireApp\
+
+
 
 
 ## Starting the Container

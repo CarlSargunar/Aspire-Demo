@@ -20,6 +20,20 @@ Start by copying all files from [1. Aspire App] to the current folder.
     dotnet add .\AspireApp\AspireApp.csproj reference .\ServiceDefaults\ServiceDefaults.csproj
 
 
+### Configure the Aspire App
+
+
+    // Add services to the container.
+    //var cache = builder.AddRedis("cache");
+
+    var api = builder.AddProject<Projects.WeatherApi>("api");
+
+    var app = builder.AddProject<Projects.AspireApp>("app")
+        //.WithReference(cache)
+        .WithReference(api);
+
+
+
 
 ## Add the Aspire Dashboard to the Solution
 

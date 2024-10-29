@@ -1,7 +1,9 @@
 ﻿@page "/weather"
+@using AspireApp.Helpers
 @attribute [StreamRendering]
 
-@inject HttpClient Http
+@inject WeatherApiClient WeatherApi
+@inject ILogger<Weather> Logger
 
 <PageTitle>Weather</PageTitle>
 
@@ -52,22 +54,15 @@ else
         try
         {
             // Call the weather API instead of generating local weather
-            forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("http://localhost:5074/weatherforecast");
+            forecasts = await WeatherApi.GetWeatherAsync();
+            Logger.LogInformation("Weather data loaded successfully");
         }
         catch (Exception ex)
         {
             // Log the error if needed and show an error message
+            Logger.LogError(ex, "Failed to load weather data");
             isError = true;
             // You can log ex.Message or do other error handling here if needed
         }
-    }
-
-    // This class matches the structure of your API data
-    private record WeatherForecast
-    {
-        public DateTime Date { get; set; }
-        public int TemperatureC { get; set; }
-        public string? Summary { get; set; }
-        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
     }
 }
