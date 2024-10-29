@@ -27,10 +27,16 @@ So
 
 ## Exporting Telemetry to the Aspire Dashboard
 
-To configure applications:
+To configure applications, do the following to both projects
 
-Use the OpenTelemetry SDK APIs within the application, or
-Start the app with known environment variables:
+Use the OpenTelemetry SDK APIs within the application by modifying the csproj file to include references to
+
+- OpenTelemetry.Extensions.Hosting
+- OpenTelemetry.Instrumentation.AspNetCore
+- OpenTelemetry.Instrumentation.Http
+- OpenTelemetry.Instrumentation.Runtime
+
+Start the app with known environment variables (stored in appsettings.json):
  - OTEL_EXPORTER_OTLP_PROTOCOL with a value of grpc.
  - OTEL_EXPORTER_OTLP_ENDPOINT with a value of http://localhost:4317.
 
