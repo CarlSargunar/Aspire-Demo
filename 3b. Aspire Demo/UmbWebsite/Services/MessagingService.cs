@@ -26,6 +26,36 @@ namespace UmbWebsite.Services
                                   arguments: null);
         }
 
+
+        // Left for reference - old way
+        //public MessageService(ILogger<MessageService> logger, IConfiguration configuration)
+        //{
+        //    _configuration = configuration;
+        //    _logger = logger;
+
+        //    var rabbitMqConfig = _configuration.GetSection("RMQConfig").Get<RmqConfig>();
+        //    if (rabbitMqConfig == null)
+        //    {
+        //        throw new ArgumentNullException("Rabbit MQ Config not set");
+        //    }
+        //    _logger.LogInformation("RabbitMQ Config: {0}", rabbitMqConfig.HostName);
+
+        //    var factory = new ConnectionFactory
+        //    {
+        //        HostName = rabbitMqConfig.HostName,
+        //        UserName = rabbitMqConfig.UserName,
+        //        Password = rabbitMqConfig.Password
+        //    };
+
+        //    _connection = factory.CreateConnection();
+        //    _channel = _connection.CreateModel();
+        //    _channel.QueueDeclare(queue: "demo-message-queue",
+        //        durable: false,
+        //        exclusive: false,
+        //        autoDelete: false,
+        //        arguments: null);
+        //}
+
         public void SendMessage(DemoLib.Models.ServiceMessage message)
         {
             var messageText = JsonSerializer.Serialize(message);

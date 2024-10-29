@@ -15,8 +15,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoApi", "DemoApi\DemoApi.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnalyticsApp", "AnalyticsApp\AnalyticsApp.csproj", "{5CC7159E-F40B-41E7-86DB-622A02FF4F28}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MessageProcessor", "MessageProcessor\MessageProcessor.csproj", "{62FBA986-5CB4-46DF-B18B-E001C3DF333E}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,10 +45,6 @@ Global
 		{5CC7159E-F40B-41E7-86DB-622A02FF4F28}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5CC7159E-F40B-41E7-86DB-622A02FF4F28}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5CC7159E-F40B-41E7-86DB-622A02FF4F28}.Release|Any CPU.Build.0 = Release|Any CPU
-		{62FBA986-5CB4-46DF-B18B-E001C3DF333E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{62FBA986-5CB4-46DF-B18B-E001C3DF333E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{62FBA986-5CB4-46DF-B18B-E001C3DF333E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{62FBA986-5CB4-46DF-B18B-E001C3DF333E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
