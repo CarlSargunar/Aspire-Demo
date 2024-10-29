@@ -14,8 +14,13 @@ Start by copying all files from [1. Aspire App] to the current folder.
 
 ### Add the references to the WeatherApi project
 
+Add a reference from the AppHost project to all the application projects, so the App Host can start them
+
     dotnet add .\AppHost\AppHost.csproj reference .\WeatherApi\WeatherApi.csproj
     dotnet add .\AppHost\AppHost.csproj reference .\AspireApp\AspireApp.csproj
+
+Add a reference from the application projects to the service defaults project
+
     dotnet add .\WeatherApi\WeatherApi.csproj reference .\ServiceDefaults\ServiceDefaults.csproj
     dotnet add .\AspireApp\AspireApp.csproj reference .\ServiceDefaults\ServiceDefaults.csproj
 
@@ -74,6 +79,7 @@ Update Program.cs
     app.UseOutputCache();
 
 ## Run the AppHost
+
 
     dotnet run --project .\AppHost\AppHost.csproj
     

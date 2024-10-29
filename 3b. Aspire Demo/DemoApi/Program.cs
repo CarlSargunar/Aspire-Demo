@@ -10,11 +10,13 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Add DbContext
-builder.Services.AddDbContext<ApiDbContext>(options =>
-{
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-});
+builder.AddSqlServerDbContext<ApiDbContext>("reportingdb");
+
+//// Add DbContext
+//builder.Services.AddDbContext<ApiDbContext>(options =>
+//{
+//    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+//});
 
 
 
@@ -40,7 +42,8 @@ using (var scope = app.Services.CreateScope())
     var dbContext = scope.ServiceProvider.GetRequiredService<ApiDbContext>();
 
     // Wait for SQL Server to be ready
-    Thread.Sleep(10000);
+    // Will no longer be required in Aspire 9, with WaitFor
+    Thread.Sleep(30000);
 
     // As this is a demo, we will apply migrations on startup, but only really to create the database. 
     if (!dbContext.Database.CanConnect())

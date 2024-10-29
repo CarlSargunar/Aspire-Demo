@@ -1,20 +1,18 @@
 ﻿@page "/analytics"
-@inject HttpClient Http
-@inject IConfiguration Configuration
+@using AnalyticsApp.Client
+@attribute [StreamRendering]
+@inject AnalyticsApiClient apiClient
+@inject ILogger<Analytics> logger
 
-<PageTitle>Page Views</PageTitle>
+<PageTitle>Analytics</PageTitle>
 
-<h1>Page Views</h1>
+<h1>Analytics</h1>
 
 <p>These are the current page views on your site.</p>
 
 @if (pageViews == null)
 {
-    <p><em>Loading from @apiUrl</em></p>
-    @if (string.IsNullOrEmpty(errorMessage) == false)
-    {
-        <p><strong>Error:</strong> @errorMessage</p>
-    }
+    <p><em>Loading Pageviews ...</em></p>
 }
 else
 {
@@ -39,29 +37,26 @@ else
     </table>
 }
 
+@if (string.IsNullOrEmpty(errorMessage) == false)
+{
+    <p><strong>Error:</strong> @errorMessage</p>
+}
+
+
 @code {
     private PageView[]? pageViews;
-    private string apiUrl = "";
-    private string errorMessage = "";
+    private string? errorMessage;
 
     protected override async Task OnInitializedAsync()
     {
         try
         {
-            apiUrl = Configuration["ApiURL"]; // Get the API URL from appsettings.json
-            pageViews = await Http.GetFromJsonAsync<PageView[]>(apiUrl);
+            pageViews = await apiClient.GetPageViews();
         }
         catch (Exception ex)
         {
             errorMessage = ex.Message;
+            logger.LogError(ex, "Failed to load page views");
         }
-    }
-
-    public class PageView
-    {
-        public int Id { get; set; }
-        public string Url { get; set; }
-        public DateTime LastAccessed { get; set; }
-        public int Count { get; set; }
     }
 }
