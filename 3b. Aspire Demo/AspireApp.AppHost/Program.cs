@@ -17,8 +17,8 @@ var umbraco = builder.AddProject<Projects.UmbWebsite>("umbwebsite")
 //    .WithReference(sqlContainer)
 //    .WithReference(rabbitMq);
 
-//var demoapi = builder.AddProject<Projects.DemoApi>("demoapi")
-//    .WithReference(sqlContainer);
+var demoapi = builder.AddProject<Projects.DemoApi>("demoapi")
+    .WithReference(sqlContainer);
 
 //var analytics = builder.AddProject<Projects.AnalyticsApp>("analytics")
 //    .WithReference(demoapi);
