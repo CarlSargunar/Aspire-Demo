@@ -66,6 +66,12 @@ Update Program.cs
 
 Update Program.cs
 
+    // Add reference to cache service
+    builder.AddRedisOutputCache("cache");
+
+
+    // Add Redis Output Cache Middleware
+    app.UseOutputCache();
 
 ## Run the AppHost
 
