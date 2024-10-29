@@ -1,3 +1,4 @@
+//using OpenTelemetry.Logs;
 using AspireApp.Components;
 using AspireApp.Helpers;
 
@@ -18,6 +19,17 @@ builder.Services.AddHttpClient<WeatherApiClient>(client =>
 // Configure logging
 builder.Logging.SetMinimumLevel(LogLevel.Information); // Change to LogLevel.Debug, Trace, etc., as needed
 
+//// Configure OTLP exporter
+//var openTelemetryUri = new Uri(builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"]);
+
+//// Configure OpenTelemetry Logging
+//builder.Logging.AddOpenTelemetry(log =>
+//{
+//    log.AddOtlpExporter(opt => opt.Endpoint = openTelemetryUri);
+//    log.IncludeScopes = true;
+//    log.IncludeFormattedMessage = true;
+//});
+
 
 var app = builder.Build();
 
@@ -28,8 +40,6 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-
-
 
 app.UseHttpsRedirection();
 

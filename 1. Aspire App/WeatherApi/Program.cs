@@ -14,15 +14,18 @@ builder.Services.AddSwaggerGen();
 // Inject my test service
 builder.Services.AddScoped<ITemperatureService, TemperatureService>();
 
+// Configure logging
+builder.Logging.SetMinimumLevel(LogLevel.Information); // Change to LogLevel.Debug, Trace, etc., as needed
+
 //// Configure OTLP exporter
 //var openTelemetryUri = new Uri(builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"]);
 
 //// Configure Logging
 //builder.Logging.AddOpenTelemetry(log =>
 //{
-//   log.AddOtlpExporter(opt => opt.Endpoint = openTelemetryUri);
-//   log.IncludeScopes = true;
-//   log.IncludeFormattedMessage = true;
+//    log.AddOtlpExporter(opt => opt.Endpoint = openTelemetryUri);
+//    log.IncludeScopes = true;
+//    log.IncludeFormattedMessage = true;
 //});
 
 
