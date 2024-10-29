@@ -1,13 +1,25 @@
 using AspireApp.Components;
+using AspireApp.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.AddServiceDefaults();
+
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
-// Register HttpClient to be used for making HTTP requests
-builder.Services.AddHttpClient();
+// Register WeatherApiClient to be used for making HTTP requests
+builder.Services.AddHttpClient<WeatherApiClient>(client =>
+{
+    // This URL uses "https+http://" to indicate HTTPS is preferred over HTTP.
+    // Learn more about service discovery scheme resolution at https://aka.ms/dotnet/sdschemes.
+    client.BaseAddress = new("http://localhost:5074/weatherforecast");
+});
+
+// Configure logging
+builder.Logging.SetMinimumLevel(LogLevel.Information); // Change to LogLevel.Debug, Trace, etc., as needed
 
 var app = builder.Build();
 

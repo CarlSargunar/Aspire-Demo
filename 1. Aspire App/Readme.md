@@ -13,7 +13,7 @@ To start the container, run the following command:
     docker run --rm -it -d -p 18888:18888 -p 4317:18889 --name aspire-dashboard mcr.microsoft.com/dotnet/aspire-dashboard:8.2
 
 The two ports exposed by the conainer are :
-- 4317:18889 - the port for Open Telemetry Protocol (OTLP)
+- 4317:18889 - the port for Open Telemetry Protocol (OTLP). This will be used later in appsettings.json
 - 18888:18888 - the port for the Aspire Dashboard
 
 *Note:* You can optionally allow anonymous access to the dashboard by adding the the following environmental variable
@@ -36,8 +36,8 @@ Use the OpenTelemetry SDK APIs within the application by modifying the csproj fi
 - OpenTelemetry.Instrumentation.Http
 - OpenTelemetry.Instrumentation.Runtime
 
-Start the app with known environment variables (stored in appsettings.json):
- - OTEL_EXPORTER_OTLP_PROTOCOL with a value of grpc.
+Start the app with known environment variables (stored in appsettings.json - this is taken from Docker):
+
  - OTEL_EXPORTER_OTLP_ENDPOINT with a value of http://localhost:4317.
 
 ## References

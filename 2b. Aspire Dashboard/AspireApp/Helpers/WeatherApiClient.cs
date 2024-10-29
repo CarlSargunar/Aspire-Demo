@@ -1,6 +1,4 @@
-﻿using WeatherApi.Models;
-
-namespace WeatherApi.Classes
+﻿namespace AspireApp.Helpers
 {
     public class WeatherApiClient(HttpClient httpClient)
     {

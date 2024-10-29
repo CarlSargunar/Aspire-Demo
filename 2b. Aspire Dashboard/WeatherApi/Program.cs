@@ -6,18 +6,18 @@ using WeatherApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add service defaults & Aspire components.
-builder.AddServiceDefaults();
-//builder.AddRedisOutputCache("cache");
-
 // Add services to the container.
 builder.Services.AddControllers(); // Add this to support controllers
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.AddServiceDefaults();
+
 // Inject my test service
 builder.Services.AddScoped<ITemperatureService, TemperatureService>();
 
+// Configure logging
+builder.Logging.SetMinimumLevel(LogLevel.Information); // Change to LogLevel.Debug, Trace, etc., as needed
 
 var app = builder.Build();
 
