@@ -47,7 +47,11 @@ Add a refernce in the App Hosts Project to Redis Cache
 
 And add a reference to Aspire.StackExchange.Redis.OutputCaching to the AspireApp Project
 
+    dotnet add .\AspireApp\AspireApp.csproj package Aspire.StackExchange.Redis.OutputCaching
+
 ### Add Aspire Config to AppHost
+
+Update Program.cs
 
     // Add services to the container.
     var cache = builder.AddRedis("cache");
@@ -58,5 +62,12 @@ And add a reference to Aspire.StackExchange.Redis.OutputCaching to the AspireApp
         .WithReference(cache)
         .WithReference(api);
 
+### Add refernce to the AspireApp
 
+Update Program.cs
+
+
+## Run the AppHost
+
+    dotnet run --project .\AppHost\AppHost.csproj
     
