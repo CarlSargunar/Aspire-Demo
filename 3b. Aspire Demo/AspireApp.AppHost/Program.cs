@@ -11,9 +11,9 @@ var rabbitMq = builder.AddRabbitMQ("messaging", password: rmqpassword)
 var umbraco = builder.AddProject<Projects.UmbWebsite>("umbwebsite")
     .WithReference(rabbitMq);
 
-//var processor = builder.AddProject<Projects.MessageProcessor>("processor")
-//    .WithReference(sqlContainer)
-//    .WithReference(rabbitMq);
+var processor = builder.AddProject<Projects.MessageProcessor>("processor")
+    .WithReference(sqlContainer)
+    .WithReference(rabbitMq);
 
 var analyticsapi = builder.AddProject<Projects.DemoApi>("analyticsapi")
     .WithReference(sqlContainer);
