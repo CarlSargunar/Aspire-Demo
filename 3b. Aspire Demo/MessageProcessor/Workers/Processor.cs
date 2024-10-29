@@ -15,29 +15,43 @@ public class Processor : BackgroundService
     private IConfiguration _configuration;
     private IModel _channel;
 
-    public Processor(ILogger<Processor> logger, IServiceScopeFactory scopeFactory, IConfiguration configuration)
+    // Left for reference - old code
+    //public Processor(ILogger<Processor> logger, IServiceScopeFactory scopeFactory, IConfiguration configuration)
+    //{
+    //    _logger = logger;
+    //    _scopeFactory = scopeFactory;
+    //    _configuration = configuration;
+
+    //    var rabbitMqConfig = _configuration.GetSection("RMQConfig").Get<RmqConfig>();
+    //    if (rabbitMqConfig == null)
+    //    {
+    //        _logger.LogError("Rabbit MQ Config not set for Worker");
+    //        throw new ArgumentNullException("Rabbit MQ Config not set");
+    //    }
+    //    _logger.LogInformation("RabbitMQ Config: {0}", rabbitMqConfig.HostName);
+
+
+    //    var factory = new ConnectionFactory()
+    //    {
+    //        HostName = rabbitMqConfig.HostName,
+    //        UserName = rabbitMqConfig.UserName,
+    //        Password = rabbitMqConfig.Password
+    //    };
+
+    //    _connection = factory.CreateConnection();
+    //    _channel = _connection.CreateModel();
+    //    _channel.QueueDeclare(queue: "demo-message-queue",
+    //                         durable: false,
+    //                         exclusive: false,
+    //                         autoDelete: false,
+    //                         arguments: null);
+    //}
+    public Processor(ILogger<Processor> logger, IServiceScopeFactory scopeFactory, IConnection connection)
     {
         _logger = logger;
         _scopeFactory = scopeFactory;
-        _configuration = configuration;
 
-        var rabbitMqConfig = _configuration.GetSection("RMQConfig").Get<RmqConfig>();
-        if (rabbitMqConfig == null)
-        {
-            _logger.LogError("Rabbit MQ Config not set for Worker");
-            throw new ArgumentNullException("Rabbit MQ Config not set");
-        }
-        _logger.LogInformation("RabbitMQ Config: {0}", rabbitMqConfig.HostName);
-
-
-        var factory = new ConnectionFactory()
-        {
-            HostName = rabbitMqConfig.HostName,
-            UserName = rabbitMqConfig.UserName,
-            Password = rabbitMqConfig.Password
-        };
-
-        _connection = factory.CreateConnection();
+        _connection = connection;
         _channel = _connection.CreateModel();
         _channel.QueueDeclare(queue: "demo-message-queue",
                              durable: false,
