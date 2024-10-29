@@ -12,8 +12,9 @@ var builder = Host.CreateDefaultBuilder(args)
             options.UseSqlServer(connectionString));
 
         services.AddHostedService<Processor>();
-    });
 
+        
+    });
 
 
 var app = builder.Build();
