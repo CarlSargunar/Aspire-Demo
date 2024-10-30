@@ -1,48 +1,83 @@
 # Running the Aspire Dashboard Standalonw
 
+Start by copying all files from [1. Aspire App] to the current folder.
+
+## Add Aspire Dashboard to the Solution
+
+    dotnet new aspire-apphost -n AppHost
+    dotnet new aspire-servicedefaults -n ServiceDefaults
+
+### Add the new projects to the WeatherApi.sln
+
+    dotnet sln add .\AppHost\AppHost.csproj
+    dotnet sln add .\ServiceDefaults\ServiceDefaults.csproj
+
+### Add the references to the WeatherApi project
+
+Add a reference from the AppHost project to all the application projects, so the App Host can start them
+
+    dotnet add .\AppHost\AppHost.csproj reference .\WeatherApi\WeatherApi.csproj
+    dotnet add .\AppHost\AppHost.csproj reference .\AspireApp\AspireApp.csproj
+
+Add a reference from the application projects to the service defaults project to setup Telemetry, Healthchecks and Service Discovery
+
+    dotnet add .\WeatherApi\WeatherApi.csproj reference .\ServiceDefaults\ServiceDefaults.csproj
+    dotnet add .\AspireApp\AspireApp.csproj reference .\ServiceDefaults\ServiceDefaults.csproj
 
 
-## Starting the Container
+### Configure the Aspire App
 
-To start the container, run the following command: 
+Update the Program.cs for the AppHost app
 
-    docker run --rm -it -d -p 18888:18888 -p 4317:18889 --name aspire-dashboard mcr.microsoft.com/dotnet/aspire-dashboard:8.2
+    // Add services to the container.
+    var api = builder.AddProject<Projects.WeatherApi>("api");
 
-The two ports exposed by the conainer are :
-- 4317:18889 - the port for Open Telemetry Protocol (OTLP)
-- 18888:18888 - the port for the Aspire Dashboard
-
-*Note:* You can optionally allow anonymous access to the dashboard by adding the the following environmental variable
-
-    -e DOTNET_DASHBOARD_UNSECURED_ALLOW_ANONYMOUS=True
-
-So 
-
-    docker run --rm -it -d -p 18888:18888 -p 4317:18889 -e DOTNET_DASHBOARD_UNSECURED_ALLOW_ANONYMOUS=True --name aspire-dashboard mcr.microsoft.com/dotnet/aspire-dashboard:8.2
+    var app = builder.AddProject<Projects.AspireApp>("app")
+        .WithReference(api);
 
 
-## Exporting Telemetry to the Aspire Dashboard
+### Configure ServiceDefaults
 
-To configure applications:
+In the Program.cs of each app you need to ensure there is a line
 
-Use the OpenTelemetry SDK APIs within the application, or
-Start the app with known environment variables:
- - OTEL_EXPORTER_OTLP_PROTOCOL with a value of grpc.
- - OTEL_EXPORTER_OTLP_ENDPOINT with a value of http://localhost:4317.
-
-## References
-
- - Aspire Standalong Dashboard
-    - https://learn.microsoft.com/en-us/dotnet/aspire/fundamentals/dashboard/standalone?tabs=bash
- - Build a Blazor App
-    - https://learn.microsoft.com/en-us/aspnet/core/blazor/tutorials/build-a-blazor-app
+    builder.AddServiceDefaults();
 
 
-## Notes : Mostly for me
+## Extra : Add cache
 
-From the Aspire Dashboard folder, run the weather api and the blazor app in two terminals
+Add a reference in the App Hosts Project to Redis Cache
 
-    dotnet run --project .\WeatherApi\
-    dotnet run --project .\AspireApp\
+    dotnet add .\AppHost\AppHost.csproj package Aspire.Cache.Redis
 
-Swagger endpoint for the API is available from [http://localhost:5074/SWAGGER/index.html](http://localhost:5074/SWAGGER/index.html)
+And add a reference to Aspire.StackExchange.Redis.OutputCaching to the AspireApp Project
+
+    dotnet add .\AspireApp\AspireApp.csproj package Aspire.StackExchange.Redis.OutputCaching
+
+### Add Aspire Config to AppHost
+
+Update Program.cs
+
+    // Add services to the container.
+    var cache = builder.AddRedis("cache");
+
+    var api = builder.AddProject<Projects.WeatherApi>("api");
+
+    var app = builder.AddProject<Projects.AspireApp>("app")
+        .WithReference(cache)
+        .WithReference(api);
+
+### Add refernce to the AspireApp
+
+Update Program.cs
+
+    // Add reference to cache service
+    builder.AddRedisOutputCache("cache");
+
+    // Add Redis Output Cache Middleware
+    app.UseOutputCache();
+
+## Run the AppHost
+
+
+    dotnet run --project .\AppHost\AppHost.csproj
+    

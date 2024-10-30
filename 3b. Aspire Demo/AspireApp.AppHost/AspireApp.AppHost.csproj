@@ -18,6 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\AnalyticsApp\AnalyticsApp.csproj" />
     <ProjectReference Include="..\DemoApi\DemoApi.csproj" />
+    <ProjectReference Include="..\MessageProcessor\MessageProcessor.csproj" />
     <ProjectReference Include="..\UmbWebsite\UmbWebsite.csproj" />
   </ItemGroup>
 

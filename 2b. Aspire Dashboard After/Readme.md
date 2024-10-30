@@ -19,7 +19,7 @@ Add a reference from the AppHost project to all the application projects, so the
     dotnet add .\AppHost\AppHost.csproj reference .\WeatherApi\WeatherApi.csproj
     dotnet add .\AppHost\AppHost.csproj reference .\AspireApp\AspireApp.csproj
 
-Add a reference from the application projects to the service defaults project
+Add a reference from the application projects to the service defaults project to setup Telemetry, Healthchecks and Service Discovery
 
     dotnet add .\WeatherApi\WeatherApi.csproj reference .\ServiceDefaults\ServiceDefaults.csproj
     dotnet add .\AspireApp\AspireApp.csproj reference .\ServiceDefaults\ServiceDefaults.csproj
@@ -46,7 +46,7 @@ In the Program.cs of each app you need to ensure there is a line
 
 ## Extra : Add cache
 
-Add a refernce in the App Hosts Project to Redis Cache
+Add a reference in the App Hosts Project to Redis Cache
 
     dotnet add .\AppHost\AppHost.csproj package Aspire.Cache.Redis
 
