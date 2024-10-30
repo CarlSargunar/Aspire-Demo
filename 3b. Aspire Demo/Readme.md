@@ -1,5 +1,13 @@
 # External Services
 
+
+## Run the AppHost
+
+    dotnet run --project .\AspireApp.AppHost\AspireApp.AppHost.csproj --launch-profile "http"
+
+# Only old things below here, to be updated. Please ignore
+
+
 Run Containers
 
  **NOTE : On windows, all the line endings need to be set to LF for the Dockerfile, setup.sql and startup.sh**
@@ -50,9 +58,6 @@ New Console App - Processor
 - Program.cs
 - Worker
 
-
-
-
 ## Aspire App Host
 
     // Add RabbitMQ to the application
@@ -68,3 +73,4 @@ New Console App - Processor
 
     // Add Analytics Project
     builder.AddProject<Projects.AnalyticsApp>("analytics");
+

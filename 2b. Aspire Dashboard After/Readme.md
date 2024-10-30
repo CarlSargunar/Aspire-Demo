@@ -81,5 +81,5 @@ Update Program.cs
 ## Run the AppHost
 
 
-    dotnet run --project .\AppHost\AppHost.csproj
+    dotnet run --project .\AppHost\AppHost.csproj --launch-profile "http"
     
