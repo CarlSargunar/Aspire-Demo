@@ -3,9 +3,8 @@ using UmbWebsite.Configuration;
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
+builder.AddRabbitMQClient(connectionName:"messaging");
 
-// Add RabbitMQ client
-builder.AddRabbitMQClient(connectionName: "messaging");
 
 builder.CreateUmbracoBuilder()
     .AddBackOffice()
@@ -14,7 +13,6 @@ builder.CreateUmbracoBuilder()
     .AddComposers()
     // My custom DI service registration
     .AddCustomServices()
-
     .Build();
 
 WebApplication app = builder.Build();

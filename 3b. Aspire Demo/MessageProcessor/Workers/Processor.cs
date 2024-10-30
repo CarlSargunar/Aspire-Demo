@@ -1,14 +1,18 @@
 ﻿using DemoLib.Enumerations;
 using DemoLib.Models;
-using MessageProcessor.Data;
-using RabbitMQ.Client.Events;
 using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
+using MessageProcessor.Data;
+using DemoLib.Config;
+using Microsoft.EntityFrameworkCore;
 
-public class Processor
+namespace MessageProcessor.Workers;
+public class Processor : BackgroundService
 {
     private readonly ILogger<Processor> _logger;
     private readonly IServiceScopeFactory _scopeFactory;
     private IConnection _connection;
+    private IConfiguration _configuration;
     private IModel _channel;
 
     public Processor(ILogger<Processor> logger, IServiceScopeFactory scopeFactory, IConnection connection)
@@ -25,7 +29,7 @@ public class Processor
                              arguments: null);
     }
 
-    public async Task RunProcessorAsync(CancellationToken stoppingToken)
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         await WriteTestMessageAsync();
 
@@ -47,19 +51,23 @@ public class Processor
             }
         };
 
+        // Consume messages
         var consumerTag = _channel.BasicConsume(queue: "demo-message-queue", autoAck: true, consumer: consumer);
 
+        // Wait until cancellation is requested
         stoppingToken.Register(() =>
         {
             _logger.LogInformation("Stopping RabbitMQ consumer.");
-            _channel.BasicCancel(consumerTag);
+            _channel.BasicCancel(consumerTag); // Gracefully stop consuming
         });
 
+        // Keep the service alive until cancellation is requested
         while (!stoppingToken.IsCancellationRequested)
         {
-            await Task.Delay(1000, stoppingToken);
+            await Task.Delay(1000, stoppingToken);  // Ensure graceful exit on cancellation
         }
     }
+
 
     private async Task WriteTestMessageAsync()
     {
@@ -87,17 +95,23 @@ public class Processor
             var dbContext = scope.ServiceProvider.GetRequiredService<WorkerContext>();
             dbContext.ServiceMessages.Add(message);
 
+
+            // Todo : handle other message types
             if (message.MessageType == MessageType.Analytics)
             {
-                var pageView = dbContext.PageViews.FirstOrDefault(pv => pv.URL == message.MessageBody);
+                // Try to find the existing PageView by URL (matching message.MessageBody)
+                var pageView = await dbContext.PageViews.FirstOrDefaultAsync(pv => pv.URL == message.MessageBody);
+
                 if (pageView != null)
                 {
+                    // If found, increment the view count and update the LastAccessed field
                     pageView.Count++;
                     pageView.LastAccessed = DateTime.UtcNow;
                     _logger.LogInformation("PageView updated for URL: {0}", message.MessageBody);
                 }
                 else
                 {
+                    // If not found, create a new PageView entry
                     pageView = new PageView
                     {
                         URL = message.MessageBody,
@@ -107,16 +121,19 @@ public class Processor
                     dbContext.PageViews.Add(pageView);
                     _logger.LogInformation("New PageView created for URL: {0}", message.MessageBody);
                 }
+                _logger.LogInformation("Analytics message processed and PageView saved to the database. URL: {0}", message.MessageBody);
             }
 
             await dbContext.SaveChangesAsync();
+
             _logger.LogInformation("Message processed and saved to the database. ID: {0}", message.Id);
         }
     }
 
-    public void Dispose()
+    public override void Dispose()
     {
         _channel?.Close();
         _connection?.Close();
+        base.Dispose();
     }
 }

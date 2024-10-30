@@ -17,28 +17,7 @@ namespace DemoApi.Controllers
             _logger = logger;
             _context = context;
         }
-
-        // GET: api/analytics/emails
-        [HttpGet("emails")]
-        public async Task<ActionResult<IEnumerable<Email>>> GetEmails()
-        {
-            try
-            {
-                var emails = await _context.Emails.Include(e => e.ServiceMessage).ToListAsync();
-                if (emails == null || !emails.Any())
-                {
-                    _logger.LogInformation("No emails found.");
-                    return NotFound("No emails found.");
-                }
-
-                return Ok(emails);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "An error occurred while fetching emails.");
-                return StatusCode(500, "Internal server error");
-            }
-        }
+        
 
         // GET: api/analytics/pageviews
         [HttpGet("pageviews")]

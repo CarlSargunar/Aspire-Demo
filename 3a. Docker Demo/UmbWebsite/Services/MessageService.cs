@@ -71,4 +71,9 @@ namespace UmbWebsite.Services
             _connection.Dispose();
         }
     }
+
+    public interface IMessageService
+    {
+        void SendMessage(ServiceMessage message);
+    }    
 }

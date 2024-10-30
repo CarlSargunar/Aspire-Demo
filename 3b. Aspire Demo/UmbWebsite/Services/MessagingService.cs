@@ -1,7 +1,10 @@
 ﻿using System.Text;
 using System.Text.Json;
+using RabbitMQ.Client;
+using RabbitMQ.Client;
+using System.Text;
 using DemoLib.Models;
-using RabbitMQ.Client; 
+using Umbraco.Cms.Core.Sync;
 
 namespace UmbWebsite.Services
 {
@@ -9,29 +12,11 @@ namespace UmbWebsite.Services
     {
         private readonly ILogger<MessageService> _logger;
         private readonly IConnection _connection;
-        private readonly IConfiguration _configuration;
         private readonly IModel _channel;
 
-        public MessageService(ILogger<MessageService> logger, IConfiguration configuration, IConnection connection)
+        public MessageService(ILogger<MessageService> logger, IConnection connection)
         {
-            _configuration = configuration;
             _logger = logger;
-
-            // No Longer Needed
-            //var rabbitMqConfig = _configuration.GetSection("RMQConfig").Get<RmqConfig>();
-            //if (rabbitMqConfig == null)
-            //{
-            //    throw new ArgumentNullException("Rabbit MQ Config not set");
-            //}
-            //_logger.LogInformation("RabbitMQ Config: {0}", rabbitMqConfig.HostName);
-
-            //var factory = new ConnectionFactory
-            //{
-            //    HostName = rabbitMqConfig.HostName,
-            //    UserName = rabbitMqConfig.UserName,
-            //    Password = rabbitMqConfig.Password
-            //};
-
             _connection = connection;
             _channel = _connection.CreateModel();
             _channel.QueueDeclare(queue: "demo-message-queue",
@@ -41,7 +26,37 @@ namespace UmbWebsite.Services
                                   arguments: null);
         }
 
-        public void SendMessage(ServiceMessage message)
+
+        // Left for reference - old way
+        //public MessageService(ILogger<MessageService> logger, IConfiguration configuration)
+        //{
+        //    _configuration = configuration;
+        //    _logger = logger;
+
+        //    var rabbitMqConfig = _configuration.GetSection("RMQConfig").Get<RmqConfig>();
+        //    if (rabbitMqConfig == null)
+        //    {
+        //        throw new ArgumentNullException("Rabbit MQ Config not set");
+        //    }
+        //    _logger.LogInformation("RabbitMQ Config: {0}", rabbitMqConfig.HostName);
+
+        //    var factory = new ConnectionFactory
+        //    {
+        //        HostName = rabbitMqConfig.HostName,
+        //        UserName = rabbitMqConfig.UserName,
+        //        Password = rabbitMqConfig.Password
+        //    };
+
+        //    _connection = factory.CreateConnection();
+        //    _channel = _connection.CreateModel();
+        //    _channel.QueueDeclare(queue: "demo-message-queue",
+        //        durable: false,
+        //        exclusive: false,
+        //        autoDelete: false,
+        //        arguments: null);
+        //}
+
+        public void SendMessage(DemoLib.Models.ServiceMessage message)
         {
             var messageText = JsonSerializer.Serialize(message);
             var body = Encoding.UTF8.GetBytes(messageText);
@@ -77,5 +92,4 @@ namespace UmbWebsite.Services
     {
         void SendMessage(ServiceMessage message);
     }
-
 }

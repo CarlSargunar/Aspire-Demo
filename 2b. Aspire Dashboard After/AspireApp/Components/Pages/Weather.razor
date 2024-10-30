@@ -1,0 +1,68 @@
+﻿@page "/weather"
+@using AspireApp.Helpers
+@attribute [StreamRendering]
+
+@inject WeatherApiClient WeatherApi
+@inject ILogger<Weather> Logger
+
+<PageTitle>Weather</PageTitle>
+
+<h1>Weather</h1>
+
+<p>This component demonstrates showing British Weather data from an external API.</p>
+
+@if (isError)
+{
+    <h2>Error!</h2>
+    <p><em>There was an error loading the weather data. Please try again later.</em></p>
+}
+else if (forecasts == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Temp. (C)</th>
+                <th>Temp. (F)</th>
+                <th>Summary</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var forecast in forecasts)
+            {
+                <tr>
+                    <td>@forecast.Date.ToShortDateString()</td>
+                    <td>@forecast.TemperatureC</td>
+                    <td>@forecast.TemperatureF</td>
+                    <td>@forecast.Summary</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private WeatherForecast[]? forecasts;
+    private bool isError = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            // Call the weather API instead of generating local weather
+            forecasts = await WeatherApi.GetWeatherAsync();
+            Logger.LogInformation("Weather data loaded successfully");
+        }
+        catch (Exception ex)
+        {
+            // Log the error if needed and show an error message
+            Logger.LogError(ex, "Failed to load weather data");
+            isError = true;
+            // You can log ex.Message or do other error handling here if needed
+        }
+    }
+}

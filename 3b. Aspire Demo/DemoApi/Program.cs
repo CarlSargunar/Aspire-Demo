@@ -10,11 +10,15 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Add DbContext
-builder.Services.AddDbContext<ApiDbContext>(options =>
-{
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-});
+builder.AddSqlServerDbContext<ApiDbContext>("reportingdb");
+
+//// Add DbContext
+//builder.Services.AddDbContext<ApiDbContext>(options =>
+//{
+//    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+//});
+
+
 
 // Add CORS and define a policy to allow everything - this is just for demo purposes
 builder.Services.AddCors(options =>
@@ -38,6 +42,7 @@ using (var scope = app.Services.CreateScope())
     var dbContext = scope.ServiceProvider.GetRequiredService<ApiDbContext>();
 
     // Wait for SQL Server to be ready
+    // Will no longer be required in Aspire 9, with WaitFor
     Thread.Sleep(10000);
 
     // As this is a demo, we will apply migrations on startup, but only really to create the database. 
