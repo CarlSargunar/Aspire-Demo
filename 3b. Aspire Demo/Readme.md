@@ -1,4 +1,16 @@
-# External Services
+# Aspire Demo
+
+Ensure the User Secrets are set for the AppHost
+
+    {
+    "Parameters:messaging-password": "RMQ_password123",
+    "Parameters:sql-password": "SQL_password123"
+    }
+
+You can also do that with the following commands
+
+    dotnet user-secrets set "Parameters:messaging-password" "RMQ_password123"
+    dotnet user-secrets set "Parameters:sql-password" "SQL_password123"
 
 
 ## Run the AppHost
