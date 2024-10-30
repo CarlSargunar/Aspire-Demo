@@ -15,7 +15,7 @@ You can also do that with the following commands
 
 ## Run the AppHost
 
-    dotnet run --project .\AspireApp.AppHost\AspireApp.AppHost.csproj --launch-profile "http"
+    dotnet run --project ./AspireApp.AppHost/AspireApp.AppHost.csproj --launch-profile "http"
 
 # Only old things below here, to be updated. Please ignore
 
