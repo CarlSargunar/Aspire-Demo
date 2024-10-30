@@ -1,4 +1,7 @@
-//using OpenTelemetry.Logs;
+// using OpenTelemetry.Logs;
+// using OpenTelemetry.Metrics;
+// using OpenTelemetry.Resources;
+// using OpenTelemetry.Trace;
 using AspireApp.Components;
 using AspireApp.Helpers;
 
@@ -19,16 +22,32 @@ builder.Services.AddHttpClient<WeatherApiClient>(client =>
 // Configure logging
 builder.Logging.SetMinimumLevel(LogLevel.Information); // Change to LogLevel.Debug, Trace, etc., as needed
 
-//// Configure OTLP exporter
-//var openTelemetryUri = new Uri(builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"]);
+// // Configure OTLP exporter
+// var openTelemetryUri = new Uri(builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"]);
 
-//// Configure OpenTelemetry Logging
-//builder.Logging.AddOpenTelemetry(log =>
-//{
-//    log.AddOtlpExporter(opt => opt.Endpoint = openTelemetryUri);
-//    log.IncludeScopes = true;
-//    log.IncludeFormattedMessage = true;
-//});
+// // Configure OpenTelemetry Logging
+// builder.Logging.AddOpenTelemetry(log =>
+// {
+//     log.AddOtlpExporter(opt => opt.Endpoint = openTelemetryUri);
+//     log.IncludeScopes = true;
+//     log.IncludeFormattedMessage = true;
+// });
+
+// // Give it a name
+// builder.Services.AddOpenTelemetry()
+//   .ConfigureResource(res => res
+//       .AddService("Weather Dashboard"))
+//     .WithTracing(tracing =>
+//       {
+
+//           tracing
+//               .AddAspNetCoreInstrumentation()
+//               .AddHttpClientInstrumentation();
+
+//           tracing.AddOtlpExporter(opt => opt.Endpoint = openTelemetryUri);
+
+//       }
+//   );
 
 
 var app = builder.Build();
