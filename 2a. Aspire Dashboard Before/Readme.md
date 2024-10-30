@@ -1,6 +1,6 @@
 # Running the Aspire Dashboard Standalonw
 
-Start by copying all files from [1. Aspire App] to the current folder.
+Start by copying all files from [1. Aspire App] to the current folder, inc the SLN file
 
 ## Add Aspire Dashboard to the Solution
 
@@ -41,6 +41,13 @@ Update the Program.cs for the AppHost app
 In the Program.cs of each app you need to ensure there is a line
 
     builder.AddServiceDefaults();
+
+
+## Run the AppHost
+
+
+    dotnet run --project .\AppHost\AppHost.csproj
+    
 
 
 ## Extra : Add cache
