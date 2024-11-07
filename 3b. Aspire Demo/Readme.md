@@ -3,8 +3,8 @@
 Ensure the User Secrets are set for the AppHost
 
     {
-    "Parameters:messaging-password": "RMQ_password123",
-    "Parameters:sql-password": "SQL_password123"
+        "Parameters:messaging-password": "RMQ_password123",
+        "Parameters:sql-password": "SQL_password123"
     }
 
 You can also do that with the following commands
