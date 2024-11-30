@@ -52,7 +52,7 @@ Start the app with known environment variables (stored in appsettings.json - thi
 
 From the Aspire Dashboard folder, run the weather api and the blazor app in two terminals
 
-    dotnet run --project .\WeatherApi\
-    dotnet run --project .\AspireApp\
+    dotnet run --project WeatherApi
+    dotnet run --project AspireApp
 
 Swagger endpoint for the API is available from [http://localhost:5074/SWAGGER/index.html](http://localhost:5074/SWAGGER/index.html)
