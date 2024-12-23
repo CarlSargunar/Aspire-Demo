@@ -2,8 +2,8 @@
 
 Check it works before Aspire
 
-    dotnet run --project .\WeatherApi\
-    dotnet run --project .\AspireApp\
+    dotnet run --project WeatherApi
+    dotnet run --project AspireApp
 
 
 ## Starting the Aspire Dashboard Container
