@@ -10,8 +10,8 @@ Slides for this talk are available [here](https://docs.google.com/presentation/d
 
 You need the following installed to run the demo:
 
-- .NET 8.0
-    - .NET Aspire workload: (Installed with the Visual Studio installer or the .NET CLI)
+- .NET 9.0
+    - .NET Aspire workload is no longer needed as of .NET 9.0
 - Docker Desktop or a local Docker installation
 - An IDE or text editor, such as:
     - Visual Studio
