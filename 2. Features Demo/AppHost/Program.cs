@@ -6,7 +6,10 @@ var cache = builder.AddRedis("cache");
 var api = builder.AddProject<Projects.WeatherApi>("api");
 
 var app = builder.AddProject<Projects.AspireApp>("app")
+    .WithExternalHttpEndpoints()
     .WithReference(cache)
-    .WithReference(api);
+    .WaitFor(cache)
+    .WithReference(api)
+    .WaitFor(api);
 
 builder.Build().Run();
