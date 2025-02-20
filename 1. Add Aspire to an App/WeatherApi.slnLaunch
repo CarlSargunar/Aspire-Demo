@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "WeatherApi\\WeatherApi.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "AspireApp\\AspireApp.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]
