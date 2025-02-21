@@ -41,6 +41,10 @@ using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<ApiDbContext>();
 
+    // Wait for SQL Server to be ready - horrible hack
+    // Will no longer be required in Aspire 9, with WaitFor
+    Thread.Sleep(10000);
+
     // As this is a demo, we will apply migrations on startup, but only really to create the database. 
     if (!dbContext.Database.CanConnect())
     {

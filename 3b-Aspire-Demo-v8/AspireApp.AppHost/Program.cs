@@ -9,18 +9,14 @@ var rabbitMq = builder.AddRabbitMQ("messaging", password: rmqpassword)
     .WithManagementPlugin();
 
 var umbraco = builder.AddProject<Projects.UmbWebsite>("umbwebsite")
-    .WithReference(rabbitMq)
-    .WaitFor(rabbitMq);
+    .WithReference(rabbitMq);
 
 var processor = builder.AddProject<Projects.MessageProcessor>("processor")
     .WithReference(sqlContainer)
-    .WaitFor(sqlContainer)
-    .WithReference(rabbitMq)
-    .WaitFor(rabbitMq);
+    .WithReference(rabbitMq);
 
 var analyticsapi = builder.AddProject<Projects.DemoApi>("analyticsapi")
-    .WithReference(sqlContainer)
-    .WaitFor(sqlContainer);
+    .WithReference(sqlContainer);
 
 var analytics = builder.AddProject<Projects.AnalyticsApp>("analyticsapp")
     .WithReference(analyticsapi);

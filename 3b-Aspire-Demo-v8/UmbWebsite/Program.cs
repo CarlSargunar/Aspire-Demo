@@ -11,7 +11,7 @@ builder.CreateUmbracoBuilder()
     .AddWebsite()
     .AddDeliveryApi()
     .AddComposers()
-    // Here's where I'm injecting my middleware for the analytics messaging
+    // My custom DI service registration
     .AddCustomServices()
     .Build();
 
