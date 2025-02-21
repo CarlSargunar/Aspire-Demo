@@ -2,6 +2,7 @@
 using System.Text.Json;
 using DemoLib.Models;
 using RabbitMQ.Client;
+using UmbracoSite.Enumerations;
 
 namespace UmbracoSite.Services
 {
@@ -71,8 +72,8 @@ namespace UmbracoSite.Services
         {
             var key = message.MessageType switch
             {
-                DemoLib.Enumerations.MessageType.Email => "emails",
-                DemoLib.Enumerations.MessageType.Analytics => "analytics",
+                MessageType.Email => "emails",
+                MessageType.Analytics => "analytics",
                 _ => "demo-message-queue"
             };
             return key;

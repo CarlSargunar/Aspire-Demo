@@ -4,20 +4,6 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
-	<ItemGroup>
-	  <Compile Remove="Configuration\**" />
-	  <Compile Remove="Middleware\**" />
-	  <Compile Remove="Services\**" />
-	  <Content Remove="Configuration\**" />
-	  <Content Remove="Middleware\**" />
-	  <Content Remove="Services\**" />
-	  <EmbeddedResource Remove="Configuration\**" />
-	  <EmbeddedResource Remove="Middleware\**" />
-	  <EmbeddedResource Remove="Services\**" />
-	  <None Remove="Configuration\**" />
-	  <None Remove="Middleware\**" />
-	  <None Remove="Services\**" />
-	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Aspire.RabbitMQ.Client" Version="9.0.0" />

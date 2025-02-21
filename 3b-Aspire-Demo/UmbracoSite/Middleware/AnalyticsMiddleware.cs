@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
-using DemoLib.Enumerations;
 using DemoLib.Models;
+using UmbracoSite.Enumerations;
 using UmbracoSite.Services;
 
 namespace UmbracoSite.Middleware;
