@@ -1,10 +1,18 @@
+//using UmbracoSite.Configuration;
+
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+
+//builder.AddServiceDefaults();
+//builder.AddRabbitMQClient(connectionName: "messaging");
+
 
 builder.CreateUmbracoBuilder()
     .AddBackOffice()
     .AddWebsite()
     .AddDeliveryApi()
     .AddComposers()
+    // Here's where I'm injecting my middleware for the analytics messaging
+    //.AddCustomServices()
     .Build();
 
 WebApplication app = builder.Build();
