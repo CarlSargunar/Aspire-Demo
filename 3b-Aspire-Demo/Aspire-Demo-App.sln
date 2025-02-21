@@ -1,4 +1,4 @@
-Microsoft Visual Studio Solution File, Format Version 12.00
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.13.35818.85 d17.13
 MinimumVisualStudioVersion = 10.0.40219.1
@@ -13,6 +13,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoLib", "DemoLib\DemoLib.csproj", "{2426F79E-08C5-6273-EB04-FCFD9338C1BB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageProcessor", "MessageProcessor\MessageProcessor.csproj", "{FB28060B-4C5A-7771-5D3D-1A7CF9419046}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbracoSite", "UmbracoSite\UmbracoSite.csproj", "{E83950B7-A8A2-4646-A6A4-9F36A784B141}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,6 +46,10 @@ Global
 		{FB28060B-4C5A-7771-5D3D-1A7CF9419046}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB28060B-4C5A-7771-5D3D-1A7CF9419046}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FB28060B-4C5A-7771-5D3D-1A7CF9419046}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E83950B7-A8A2-4646-A6A4-9F36A784B141}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E83950B7-A8A2-4646-A6A4-9F36A784B141}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E83950B7-A8A2-4646-A6A4-9F36A784B141}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E83950B7-A8A2-4646-A6A4-9F36A784B141}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

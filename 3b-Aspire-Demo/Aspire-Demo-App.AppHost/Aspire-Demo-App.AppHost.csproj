@@ -20,6 +20,7 @@
     <ProjectReference Include="..\DemoApi\DemoApi.csproj" />
     <ProjectReference Include="..\DemoLib\DemoLib.csproj" />
     <ProjectReference Include="..\MessageProcessor\MessageProcessor.csproj" />
+    <ProjectReference Include="..\UmbracoSite\UmbracoSite.csproj" />
   </ItemGroup>
 
 </Project>
