@@ -1,7 +1,8 @@
 var builder = DistributedApplication.CreateBuilder(args);
 
 // Add services to the container.
-var cache = builder.AddRedis("cache");
+var cache = builder.AddRedis("cache")
+    .WithLifetime(ContainerLifetime.Persistent);
 
 var api = builder.AddProject<Projects.WeatherApi>("api");
 
