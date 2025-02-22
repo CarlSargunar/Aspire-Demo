@@ -22,6 +22,27 @@ You need the following installed to run the demo:
 
 ## Running the demo
 
+The demo in this site has 2 parts, each of which is in 2 halves:
+
+### Basic Aspire Integration
+
+
+**1a-Basic-API** - A standalone API and blazor app, the exercise is to hook it up with .NET Aspire. To complete this exercise, please go through the steps in [1b-API-Aspire/Readme.md](1b-API-Aspire/Readme.md)
+
+**1b-API-Aspire** - The same API and blazor app, but now hooked up with .NET Aspire, so to see it running you can run the project in Visual Studio by opening the solution, or by running the following
+
+```bash
+dotnet run --project ./1b-API-Aspire/apphost/apphost.csproj --launch-profile "http"
+``` 
+
+### Converting Docker Compose to Aspire
+
+This is a more complex example, where a larger application is configured to use Docker Compose, which is then adapted to use .NET Aspire.
+
+
+
+
+
 
 ## References
 
