@@ -70,6 +70,31 @@ dotnet add .\WeatherApi\WeatherApi.csproj reference .\ServiceDefaults\ServiceDef
 dotnet add .\AspireApp\AspireApp.csproj reference .\ServiceDefaults\ServiceDefaults.csproj
 ```
 
+## 3 - Add AppHost Project
+
+
+Run the following Comand
+
+```bash
+dotnet new aspire-apphost -n AppHost
+dotnet sln add .\AppHost\
+```
+
+Add a reference to the WeatherApi and AspireApp projects in the AppHost project
+
+```bash 
+dotnet add .\AppHost\AppHost.csproj reference .\WeatherApi\WeatherApi.csproj
+dotnet add .\AppHost\AppHost.csproj reference .\AspireApp\AspireApp.csproj
+```
+
+Now stop all the other projects and run the AppHost Project
+
+```bash
+dotnet run --project AppHost
+```
+
+
+
 ## References
 
  - Aspire Standalong Dashboard
