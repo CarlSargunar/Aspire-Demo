@@ -12,27 +12,65 @@ You can also do that with the following commands
     dotnet user-secrets set "Parameters:messaging-password" "RMQ_password123"
     dotnet user-secrets set "Parameters:sql-password" "SQL_password123"
 
+## Add the Orchestrations
+
+Update the AppHost.Program.cs to include the orchestrations
+
+
+```csharp
+var sqlPassword = builder.AddParameter("sql-password");
+var sqlContainer = builder.AddSqlServer("sql", sqlPassword, 1433)
+    .AddDatabase("reportingdb");
+
+var rmqpassword = builder.AddParameter("messaging-password", secret: true);
+var rabbitMq = builder.AddRabbitMQ("messaging", password: rmqpassword)
+    .WithManagementPlugin();
+
+var umbraco = builder.AddProject<Projects.UmbracoSite>("umbwebsite")
+    .WithReference(rabbitMq)
+    .WaitFor(rabbitMq);
+
+var processor = builder.AddProject<Projects.MessageProcessor>("processor")
+    .WithReference(sqlContainer)
+    .WaitFor(sqlContainer)
+    .WithReference(rabbitMq)
+    .WaitFor(rabbitMq);
+
+var analyticsapi = builder.AddProject<Projects.DemoApi>("analyticsapi")
+    .WithReference(sqlContainer)
+    .WaitFor(sqlContainer);
+
+var analytics = builder.AddProject<Projects.AnalyticsApp>("analyticsapp")
+    .WithReference(analyticsapi);
+```
 
 ## Run the AppHost
 
+```bash
     dotnet run --project ./AspireApp.AppHost/AspireApp.AppHost.csproj --launch-profile "http"
+```
 
-# Only old things below here, to be updated. Please ignore
+# Only old things below here, to be updated. Please ignore, these are my scribbles
 
 
 Run Containers
 
  **NOTE : On windows, all the line endings need to be set to LF for the Dockerfile, setup.sql and startup.sh**
 
+```bash
     docker run -d --name sql_server -m 2g -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=SQL_password123' -p 1433:1433 mcr.microsoft.com/mssql/server:2022-latest
+```
 
 ## SLN
 
+
+```bash
     dotnet new sln --name "Aspire Demo"
     dotnet new aspire-apphost -o AppHost
     dotnet sln add AppHost
     dotnet new aspire-servicedefaults -o DemoServiceDefaults
     dotnet sln add DemoServiceDefaults
+```
 
 ### Umbraco
 
