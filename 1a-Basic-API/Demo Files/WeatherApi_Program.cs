@@ -1,7 +1,7 @@
-// using OpenTelemetry.Logs;
-// using OpenTelemetry.Metrics;
-// using OpenTelemetry.Resources;
-// using OpenTelemetry.Trace;
+using OpenTelemetry.Logs;
+using OpenTelemetry.Metrics;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 using WeatherApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,44 +17,44 @@ builder.Services.AddScoped<ITemperatureService, TemperatureService>();
 // Configure logging
 builder.Logging.SetMinimumLevel(LogLevel.Information); // Change to LogLevel.Debug, Trace, etc., as needed
 
-// // Configure OTLP exporter
-// var openTelemetryUri = new Uri(builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"]);
+// Configure OTLP exporter
+var openTelemetryUri = new Uri(builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"]);
 
-// // Configure Logging
-// builder.Logging.AddOpenTelemetry(log =>
-// {
-//    log.AddOtlpExporter(opt => opt.Endpoint = openTelemetryUri);
-//    log.IncludeScopes = true;
-//    log.IncludeFormattedMessage = true;
-// });
+// Configure Logging
+builder.Logging.AddOpenTelemetry(log =>
+{
+   log.AddOtlpExporter(opt => opt.Endpoint = openTelemetryUri);
+   log.IncludeScopes = true;
+   log.IncludeFormattedMessage = true;
+});
 
 
-// // Configure OpenTelemetry
-// builder.Services.AddOpenTelemetry()
-//   .ConfigureResource(res => res
-//       .AddService(WeatherMetrics.ServiceName))
-//   .WithMetrics(metrics =>
-//   {
-//       metrics
-//           .AddHttpClientInstrumentation()
-//           .AddAspNetCoreInstrumentation()
-//           .AddRuntimeInstrumentation();
+// Configure OpenTelemetry
+builder.Services.AddOpenTelemetry()
+  .ConfigureResource(res => res
+      .AddService(WeatherMetrics.ServiceName))
+  .WithMetrics(metrics =>
+  {
+      metrics
+          .AddHttpClientInstrumentation()
+          .AddAspNetCoreInstrumentation()
+          .AddRuntimeInstrumentation();
 
-//       metrics.AddMeter(WeatherMetrics.Meter.Name);
+      metrics.AddMeter(WeatherMetrics.Meter.Name);
 
-//       metrics.AddOtlpExporter(opt => opt.Endpoint = openTelemetryUri);
-//   })
-//   .WithTracing(tracing =>
-//       {
+      metrics.AddOtlpExporter(opt => opt.Endpoint = openTelemetryUri);
+  })
+  .WithTracing(tracing =>
+      {
 
-//           tracing
-//               .AddAspNetCoreInstrumentation()
-//               .AddHttpClientInstrumentation();
+          tracing
+              .AddAspNetCoreInstrumentation()
+              .AddHttpClientInstrumentation();
 
-//           tracing.AddOtlpExporter(opt => opt.Endpoint = openTelemetryUri);
+          tracing.AddOtlpExporter(opt => opt.Endpoint = openTelemetryUri);
 
-//       }
-//   );
+      }
+  );
 
 
 var app = builder.Build();
