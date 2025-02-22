@@ -1,4 +1,6 @@
-# Running the Aspire Dashboard Standalonw
+# Running the Aspire Dashboard Standalone
+
+Following are the notes for running this demo
 
 Check it works before Aspire
 
@@ -11,11 +13,7 @@ Check it works before Aspire
 To start the container, run the following command: 
 
 ```bash
-docker run --rm -it -d \
-    -p 18888:18888 \
-    -p 4317:18889 \
-    --name aspire-dashboard \
-    mcr.microsoft.com/dotnet/aspire-dashboard:9.0
+docker run --rm -it -d -p 18888:18888 -p 4317:18889 --name aspire-dashboard mcr.microsoft.com/dotnet/aspire-dashboard:9.0
 ```
 
 The two ports exposed by the conainer are :
@@ -25,26 +23,14 @@ The two ports exposed by the conainer are :
 *Note:* You can optionally allow anonymous access to the dashboard by adding the the following environmental variable DOTNET_DASHBOARD_UNSECURED_ALLOW_ANONYMOUS
 
 ```bash
-docker run --rm -it -d \
-    -p 18888:18888 \
-    -p 4317:18889 \
-    -e DOTNET_DASHBOARD_UNSECURED_ALLOW_ANONYMOUS=True
-    --name aspire-dashboard \
-    mcr.microsoft.com/dotnet/aspire-dashboard:9.0
+docker run --rm -it -d -p 18888:18888 -p 4317:18889 -e DOTNET_DASHBOARD_UNSECURED_ALLOW_ANONYMOUS=True
+    --name aspire-dashboard mcr.microsoft.com/dotnet/aspire-dashboard:9.0
 ```
 
 
-## Exporting Telemetry to the Aspire Dashboard
+## 1 - Exporting Telemetry to the Aspire Dashboard
 
 To configure applications, do the following to both projects
-
-Use the OpenTelemetry SDK APIs within the application by modifying the csproj file to include references to
-
-- OpenTelemetry.Exporter.OpenTelemetryProtocol
-- OpenTelemetry.Extensions.Hosting
-- OpenTelemetry.Instrumentation.AspNetCore
-- OpenTelemetry.Instrumentation.Http
-- OpenTelemetry.Instrumentation.Runtime
 
 You can do that by running the following commands. Note - some of these are marked as pre-release, but can still be used
 
@@ -61,6 +47,40 @@ Start the app with known environment variables (stored in appsettings.json - thi
 
  - OTEL_EXPORTER_OTLP_ENDPOINT with a value of http://localhost:4317.
 
+Then copy the contents of Program.cs from the Files into the WeatherApi project
+
+
+
+
+## 2 - Add the Service Defaults Project
+
+Run the following Comand
+
+```bash
+dotnet new classlib -n ServiceDefaults
+dotnet sln add .\ServiceDefaults\
+```
+
+Import the ServiceDefaults class into that project and add a reference to it in the WeatherApi project
+
+```bash
+dotnet add .\WeatherApi\WeatherApi.csproj reference .\ServiceDefaults\ServiceDefaults.csproj
+```
+
+And Add the required open telemetry nuget packages
+
+
+
+```bash
+    dotnet add ./ServiceDefaults package OpenTelemetry.Exporter.OpenTelemetryProtocol
+    dotnet add ./ServiceDefaults package OpenTelemetry.Extensions.Hosting
+    dotnet add ./ServiceDefaults package OpenTelemetry.Instrumentation.AspNetCore
+    dotnet add ./ServiceDefaults package OpenTelemetry.Instrumentation.Http
+    dotnet add ./ServiceDefaults package OpenTelemetry.Instrumentation.Runtime
+    dotnet add ./ServiceDefaults package Microsoft.Extensions.Http.Resilience
+    dotnet add ./ServiceDefaults package Microsoft.Extensions.ServiceDiscovery
+```
+
 ## References
 
  - Aspire Standalong Dashboard
@@ -69,15 +89,3 @@ Start the app with known environment variables (stored in appsettings.json - thi
     - https://learn.microsoft.com/en-us/aspnet/core/blazor/tutorials/build-a-blazor-app
 
 
-# Notes : Mostly for me
-
-## Run the weather api
-
-From the Aspire Dashboard folder, run the weather api and the blazor app in two terminals
-
-```bash
-    dotnet run --project WeatherApi
-    dotnet run --project AspireApp
-```
-
-Swagger endpoint for the API is available from [http://localhost:5074/SWAGGER/index.html](http://localhost:5074/SWAGGER/index.html)
