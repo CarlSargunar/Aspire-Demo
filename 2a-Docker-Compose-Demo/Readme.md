@@ -60,7 +60,7 @@ For Aspire, we need to use SQLite
 
 To build the entire application, use the following command:
 
-    docker-compose up --build
+    docker-compose up --build -d
 
 The apps are available at the following URLs:
 
