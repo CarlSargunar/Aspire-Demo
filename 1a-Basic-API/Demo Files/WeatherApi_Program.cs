@@ -6,6 +6,8 @@ using WeatherApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// builder.AddServiceDefaults();
+
 // Add services to the container.
 builder.Services.AddControllers(); // Add this to support controllers
 builder.Services.AddEndpointsApiExplorer();

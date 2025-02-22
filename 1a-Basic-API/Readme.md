@@ -49,125 +49,7 @@ You can do that by running the following commands. Note - some of these are mark
 ```
 
 
-And update the Program.cs file to include the following code
-
-```csharp
-
-// Configure OTLP exporter
-var openTelemetryUri = new Uri(builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"]);
-
-// Configure Logging
-builder.Logging.AddOpenTelemetry(log =>
-{
-   log.AddOtlpExporter(opt => opt.Endpoint = openTelemetryUri);
-   log.IncludeScopes = true;
-   log.IncludeFormattedMessage = true;
-});
-
-
-// Configure OpenTelemetry
-builder.Services.AddOpenTelemetry()
-  .ConfigureResource(res => res
-      .AddService(WeatherMetrics.ServiceName))
-  .WithMetrics(metrics =>
-  {
-      metrics
-          .AddHttpClientInstrumentation()
-          .AddAspNetCoreInstrumentation()
-          .AddRuntimeInstrumentation();
-
-      metrics.AddMeter(WeatherMetrics.Meter.Name);
-
-      metrics.AddOtlpExporter(opt => opt.Endpoint = openTelemetryUri);
-  })
-  .WithTracing(tracing =>
-      {using OpenTelemetry.Logs;
-using OpenTelemetry.Metrics;
-using OpenTelemetry.Resources;
-using OpenTelemetry.Trace;
-using WeatherApi.Services;
-
-var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-builder.Services.AddControllers(); // Add this to support controllers
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-// Inject my test service
-builder.Services.AddScoped<ITemperatureService, TemperatureService>();
-
-// Configure logging
-builder.Logging.SetMinimumLevel(LogLevel.Information); // Change to LogLevel.Debug, Trace, etc., as needed
-
-// Configure OTLP exporter
-var openTelemetryUri = new Uri(builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"]);
-
-// Configure Logging
-builder.Logging.AddOpenTelemetry(log =>
-{
-   log.AddOtlpExporter(opt => opt.Endpoint = openTelemetryUri);
-   log.IncludeScopes = true;
-   log.IncludeFormattedMessage = true;
-});
-
-
-// Configure OpenTelemetry
-builder.Services.AddOpenTelemetry()
-  .ConfigureResource(res => res
-      .AddService(WeatherMetrics.ServiceName))
-  .WithMetrics(metrics =>
-  {
-      metrics
-          .AddHttpClientInstrumentation()
-          .AddAspNetCoreInstrumentation()
-          .AddRuntimeInstrumentation();
-
-      metrics.AddMeter(WeatherMetrics.Meter.Name);
-
-      metrics.AddOtlpExporter(opt => opt.Endpoint = openTelemetryUri);
-  })
-  .WithTracing(tracing =>
-      {
-
-          tracing
-              .AddAspNetCoreInstrumentation()
-              .AddHttpClientInstrumentation();
-
-          tracing.AddOtlpExporter(opt => opt.Endpoint = openTelemetryUri);
-
-      }
-  );
-
-
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization(); // Add authorization middleware if needed
-
-app.MapControllers(); // Use controllers
-
-app.Run();
-
-
-```
-
-
-
-Start the app with known environment variables (stored in appsettings.json - this is taken from Docker):
-
- - OTEL_EXPORTER_OTLP_ENDPOINT with a value of http://localhost:4317.
-
-Then copy the contents of Program.cs from the Files into the WeatherApi project
-
+And update the Relevant Program.cs file for the WeatherApi and the Blazor App
 
 
 
@@ -180,24 +62,25 @@ dotnet new classlib -n ServiceDefaults
 dotnet sln add .\ServiceDefaults\
 ```
 
-Import the ServiceDefaults class into that project and add a reference to it in the WeatherApi project
+Add the required classes to the ServiceDefaults project
 
 ```bash
-dotnet add .\WeatherApi\WeatherApi.csproj reference .\ServiceDefaults\ServiceDefaults.csproj
-```
-
-And Add the required open telemetry nuget packages
-
-
-
-```bash
+    dotnet add ./ServiceDefaults package Microsoft.Extensions.Http.Resilience
+    dotnet add ./ServiceDefaults package Microsoft.Extensions.ServiceDiscovery
     dotnet add ./ServiceDefaults package OpenTelemetry.Exporter.OpenTelemetryProtocol
     dotnet add ./ServiceDefaults package OpenTelemetry.Extensions.Hosting
     dotnet add ./ServiceDefaults package OpenTelemetry.Instrumentation.AspNetCore
     dotnet add ./ServiceDefaults package OpenTelemetry.Instrumentation.Http
     dotnet add ./ServiceDefaults package OpenTelemetry.Instrumentation.Runtime
-    dotnet add ./ServiceDefaults package Microsoft.Extensions.Http.Resilience
-    dotnet add ./ServiceDefaults package Microsoft.Extensions.ServiceDiscovery
+```
+
+The OTel references can now be removed from the other projects
+
+Import the ServiceDefaults class into that project and add a reference to it in the WeatherApi project
+
+```bash
+dotnet add .\WeatherApi\WeatherApi.csproj reference .\ServiceDefaults\ServiceDefaults.csproj
+dotnet add .\AspireApp\AspireApp.csproj reference .\ServiceDefaults\ServiceDefaults.csproj
 ```
 
 ## References
@@ -206,5 +89,8 @@ And Add the required open telemetry nuget packages
     - https://learn.microsoft.com/en-us/dotnet/aspire/fundamentals/dashboard/standalone?tabs=bash
  - Build a Blazor App
     - https://learn.microsoft.com/en-us/aspnet/core/blazor/tutorials/build-a-blazor-app
+ - Metrics and Tracing with OpenTelemetry
+    - https://learn.microsoft.com/en-us/samples/dotnet/aspire-samples/aspire-metrics/
+
 
 
