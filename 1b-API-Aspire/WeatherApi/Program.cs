@@ -1,7 +1,7 @@
-//using OpenTelemetry.Logs;
-//using OpenTelemetry.Metrics;
-//using OpenTelemetry.Resources;
-//using OpenTelemetry.Trace;
+using OpenTelemetry.Logs;
+using OpenTelemetry.Metrics;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 using WeatherApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,33 +19,6 @@ builder.Services.AddScoped<ITemperatureService, TemperatureService>();
 // Configure logging
 builder.Logging.SetMinimumLevel(LogLevel.Information); // Change to LogLevel.Debug, Trace, etc., as needed
 
-
-// // Configure OpenTelemetry
-// builder.Services.AddOpenTelemetry()
-//   .ConfigureResource(res => res
-//       .AddService(WeatherMetrics.ServiceName))
-//   .WithMetrics(metrics =>
-//   {
-//       metrics
-//           .AddHttpClientInstrumentation()
-//           .AddAspNetCoreInstrumentation()
-//           .AddRuntimeInstrumentation();
-
-//       metrics.AddMeter(WeatherMetrics.Meter.Name);
-
-//       metrics.AddOtlpExporter(opt => opt.Endpoint = openTelemetryUri);
-//   })
-//   .WithTracing(tracing =>
-//       {
-
-//           tracing
-//               .AddAspNetCoreInstrumentation()
-//               .AddHttpClientInstrumentation();
-
-//           tracing.AddOtlpExporter(opt => opt.Endpoint = openTelemetryUri);
-
-//       }
-//   );
 
 
 var app = builder.Build();
