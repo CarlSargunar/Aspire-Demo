@@ -23,8 +23,7 @@ The two ports exposed by the conainer are :
 *Note:* You can optionally allow anonymous access to the dashboard by adding the the following environmental variable DOTNET_DASHBOARD_UNSECURED_ALLOW_ANONYMOUS
 
 ```bash
-docker run --rm -it -d -p 18888:18888 -p 4317:18889 -e DOTNET_DASHBOARD_UNSECURED_ALLOW_ANONYMOUS=True
-    --name aspire-dashboard mcr.microsoft.com/dotnet/aspire-dashboard:9.0
+docker run --rm -it -d -p 18888:18888 -p 4317:18889 -e DOTNET_DASHBOARD_UNSECURED_ALLOW_ANONYMOUS=True --name aspire-dashboard mcr.microsoft.com/dotnet/aspire-dashboard:9.0
 ```
 
 
@@ -58,20 +57,8 @@ And update the Relevant Program.cs file for the WeatherApi and the Blazor App
 Run the following Comand
 
 ```bash
-dotnet new classlib -n ServiceDefaults
+dotnet new aspire-servicedefaults -n ServiceDefaults
 dotnet sln add .\ServiceDefaults\
-```
-
-Add the required classes to the ServiceDefaults project
-
-```bash
-    dotnet add ./ServiceDefaults package Microsoft.Extensions.Http.Resilience
-    dotnet add ./ServiceDefaults package Microsoft.Extensions.ServiceDiscovery
-    dotnet add ./ServiceDefaults package OpenTelemetry.Exporter.OpenTelemetryProtocol
-    dotnet add ./ServiceDefaults package OpenTelemetry.Extensions.Hosting
-    dotnet add ./ServiceDefaults package OpenTelemetry.Instrumentation.AspNetCore
-    dotnet add ./ServiceDefaults package OpenTelemetry.Instrumentation.Http
-    dotnet add ./ServiceDefaults package OpenTelemetry.Instrumentation.Runtime
 ```
 
 The OTel references can now be removed from the other projects
