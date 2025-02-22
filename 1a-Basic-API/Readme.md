@@ -93,7 +93,28 @@ Now stop all the other projects and run the AppHost Project
 dotnet run --project AppHost
 ```
 
+## Add Redis Cache
 
+Add the Redis hosting Integration to the AspireApp project
+
+```bash
+dotnet add .\AppHost\AppHost.csproj package Aspire.Hosting.Redis
+```
+
+And the Client Integration to the AspireApp project
+
+```bash
+dotnet add .\AspireApp\AspireApp.csproj package Aspire.StackExchange.Redis.OutputCaching
+```
+
+Then update the AspireApp Program.cs file to include the Redis Cache
+
+```csharp
+    // Add Redis Output Cache
+    app.UseOutputCache();
+```
+
+Update the App Host to orchestrate the redis integration
 
 ## References
 

@@ -9,6 +9,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // builder.AddServiceDefaults();
 
+// Add Reference to Redis Cache
+//builder.AddRedisOutputCache("cache");
+
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
@@ -67,6 +70,9 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseAntiforgery();
 // app.MapDefaultEndpoints();
+
+// // Add Redis Output Cache
+// app.UseOutputCache();
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
