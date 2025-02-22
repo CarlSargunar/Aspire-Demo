@@ -405,3 +405,4 @@ FodyWeavers.xsd
 # General
 .temp
 Docker Demo/.env
+TEMP
