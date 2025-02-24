@@ -14,11 +14,10 @@ You need the following installed to run the demo:
     - .NET Aspire workload is no longer needed as of .NET 9.0
 - Docker Desktop or a local Docker installation
 - An IDE or text editor, such as:
-    - Visual Studio
+    - Visual Studio (recommended)
     - Visual Studio Code
     - JetBrains Rider
 
-    
 
 ## Running the demo
 
@@ -38,6 +37,7 @@ dotnet run --project ./1b-API-Aspire/apphost/apphost.csproj --launch-profile "ht
 ### Converting Docker Compose to Aspire
 
 This is a more complex example, where a larger application is configured to use Docker Compose, which is then adapted to use .NET Aspire.
+
 
 
 
