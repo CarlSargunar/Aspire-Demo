@@ -40,14 +40,13 @@ This is a more complex example, where a larger application is configured to use 
 
 
 
-
-
-
-
 ## References
 
 - https://learn.microsoft.com/en-us/dotnet/aspire/ : Microsoft documentation for .NET Aspire
-- https://learn.microsoft.com/dotnet/aspire/whats-new/dotnet-aspire-9-release-candidate-1 - What's new in .NET Aspire 9 RC1
+- https://devblogs.microsoft.com/dotnet/category/dotnet-aspire/
+    - https://devblogs.microsoft.com/dotnet/dotnet-aspire-9-1/
+    - https://devblogs.microsoft.com/dotnet/dotnet-aspire-92-is-now-available-with-new-ways-to-deploy/
+    - https://devblogs.microsoft.com/dotnet/introducing-dotnet-aspire-93/
 - https://learn.microsoft.com/en-us/dotnet/aspire/fundamentals/integrations-overview : Integrations overview
 - https://adolfi.dev/blog/umbraco-aspire/ : An intro to using Umbraco with .NET Aspire
 - https://github.com/dotnet/aspire-samples : .NET Aspire samples
