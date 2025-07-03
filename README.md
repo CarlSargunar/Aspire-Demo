@@ -27,6 +27,9 @@ The Aspire CLI is a command line tool that can be used to manage .NET Aspire app
 dotnet tool install --global aspire.cli --prerelease
 ```
 
+The Aspire CLI lets you create, extend and run Aspire applocations without a dependancy on .NET.
+
+![Aspire CLI Dashboard for a running app](media/image.png)
 
 ## Running the demo
 
