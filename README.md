@@ -67,3 +67,8 @@ This is a more complex example, where a larger application is configured to use 
 - https://adolfi.dev/blog/umbraco-aspire/ : An intro to using Umbraco with .NET Aspire
 - https://github.com/dotnet/aspire-samples : .NET Aspire samples
 - https://github.com/dotnet/eShop - eShop on Aspire, a sample application that uses .NET Aspire
+
+## Demos
+- Playwright tests with Aspire MCP Server
+    - https://www.youtube.com/watch?v=hnHUSUEwqMc
+    - https://github.com/csharpfritz/AspirePlaywrightDemo
