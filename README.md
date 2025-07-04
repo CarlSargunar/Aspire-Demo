@@ -50,7 +50,9 @@ dotnet run --project ./1b-API-Aspire/apphost/apphost.csproj --launch-profile "ht
 
 This is a more complex example, where a larger application is configured to use Docker Compose, which is then adapted to use .NET Aspire.
 
+**2a-Docker-Compose-Demo** - A Docker Compose application that runs a web app, an API, a SQL Server database and a RabbitMQ message broker. 
 
+**2b-Aspire-Demo** - The same application, but now configured to use .NET Aspire. You will need to 
 
 ## References
 
@@ -64,3 +66,4 @@ This is a more complex example, where a larger application is configured to use 
 - https://learn.microsoft.com/en-us/dotnet/aspire/fundamentals/integrations-overview : Integrations overview
 - https://adolfi.dev/blog/umbraco-aspire/ : An intro to using Umbraco with .NET Aspire
 - https://github.com/dotnet/aspire-samples : .NET Aspire samples
+- https://github.com/dotnet/eShop - eShop on Aspire, a sample application that uses .NET Aspire
