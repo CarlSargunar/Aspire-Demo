@@ -9,8 +9,8 @@ Ensure the User Secrets are set for the AppHost
 
 You can also do that with the following commands
 
-    dotnet user-secrets set "Parameters:messaging-password" "RMQ_password123"
-    dotnet user-secrets set "Parameters:sql-password" "SQL_password123"
+    dotnet user-secrets set "Parameters:messaging-password" "RMQ_password123" --project Aspire-Demo-App.AppHost
+    dotnet user-secrets set "Parameters:sql-password" "SQL_password123" --project Aspire-Demo-App.AppHost   
 
 ## Add the Orchestrations
 
@@ -20,10 +20,12 @@ Update the AppHost.Program.cs to include the orchestrations
 ```csharp
 var sqlPassword = builder.AddParameter("sql-password");
 var sqlContainer = builder.AddSqlServer("sql", sqlPassword, 1433)
+    .WithLifetime(ContainerLifetime.Persistent)
     .AddDatabase("reportingdb");
 
 var rmqpassword = builder.AddParameter("messaging-password", secret: true);
 var rabbitMq = builder.AddRabbitMQ("messaging", password: rmqpassword)
+    .WithLifetime(ContainerLifetime.Persistent)
     .WithManagementPlugin();
 
 var umbraco = builder.AddProject<Projects.UmbracoSite>("umbwebsite")
@@ -47,7 +49,13 @@ var analytics = builder.AddProject<Projects.AnalyticsApp>("analyticsapp")
 ## Run the AppHost
 
 ```bash
-    dotnet run --project ./AspireApp.AppHost/AspireApp.AppHost.csproj --launch-profile "http"
+    dotnet run --project Aspire-Demo-App.AppHost --launch-profile "http"
+```
+
+Or if you have the Aspire CLI installed, you can run it with
+
+```bash
+    aspire run --launch-profile "http"
 ```
 
 # Only old things below here, to be updated. Please ignore, these are my scribbles

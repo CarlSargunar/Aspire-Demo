@@ -42,7 +42,7 @@ using (var scope = app.Services.CreateScope())
     var dbContext = scope.ServiceProvider.GetRequiredService<ApiDbContext>();
 
     // As this is a demo, we will apply migrations on startup, but only really to create the database. 
-    if (!dbContext.Database.CanConnect())
+    if (dbContext.Database.CanConnect())
     {
         dbContext.Database.Migrate();
     }

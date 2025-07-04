@@ -6,7 +6,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Aspire.RabbitMQ.Client" Version="9.0.0" />
+		<PackageReference Include="Aspire.RabbitMQ.Client" Version="9.3.1" />
 		<PackageReference Include="Umbraco.Cms" Version="13.6.0" />
 		<PackageReference Include="Umbraco.TheStarterKit" Version="13.0" />
 	</ItemGroup>
