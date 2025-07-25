@@ -1,8 +1,8 @@
 # Aspire-Demo
 
-This is the companion repo for my talk about .NET Aspire, which illustrates a mechanism to take a cloud-native application build with Docker Compose and move it to .NET Aspire. 
+This is the companion repo for my talk about .NET Aspire, which illustrates a mechanism to take a cloud-native application build with Docker Compose and move it to .NET Aspire.
 
-There are two applications in this repo - one build with Docker Compose, and one with Aspire. 
+There are two applications in this repo - one build with Docker Compose, and one with Aspire.
 
 Slides for this talk are available [here](https://docs.google.com/presentation/d/1pKHi34APKTjNJMnEQa6QBoe_FazFd_tjzxuLe4BMN38/)
 
@@ -17,13 +17,13 @@ You need the following installed to run the demo:
     - Visual Studio Code
     - JetBrains Rider
 
-For full instructions on setting up the toolingd, please refere to the documentation in the references. 
+For full instructions on setting up the toolingd, please refere to the documentation in the references.
 
 ### Optional - Aspire CLI
 
 The Aspire CLI is a command line tool that can be used to manage .NET Aspire applications. It is not required to run the demo, but is helpful in the demo. To install
 
-```bash 
+```bash
 dotnet tool install --global aspire.cli --prerelease
 ```
 
@@ -44,15 +44,15 @@ The demo in this site has 2 parts, each of which is in 2 halves:
 
 ```bash
 dotnet run --project ./1b-API-Aspire/apphost/apphost.csproj --launch-profile "http"
-``` 
+```
 
 ### Converting Docker Compose to Aspire
 
 This is a more complex example, where a larger application is configured to use Docker Compose, which is then adapted to use .NET Aspire.
 
-**2a-Docker-Compose-Demo** - A Docker Compose application that runs a web app, an API, a SQL Server database and a RabbitMQ message broker. 
+**2a-Docker-Compose-Demo** - A Docker Compose application that runs a web app, an API, a SQL Server database and a RabbitMQ message broker.
 
-**2b-Aspire-Demo** - The same application, but now configured to use .NET Aspire. You will need to 
+**2b-Aspire-Demo** - The same application, but now configured to use .NET Aspire. You will need to
 
 ## References
 
@@ -72,3 +72,6 @@ This is a more complex example, where a larger application is configured to use 
 - Playwright tests with Aspire MCP Server
     - https://www.youtube.com/watch?v=hnHUSUEwqMc
     - https://github.com/csharpfritz/AspirePlaywrightDemo
+- Workshop on .NET Aspire
+    - https://github.com/dotnet-presentations/dotnet-aspire-workshop
+    - https://github.com/csharpfritz/dotnet-aspire-workshop
